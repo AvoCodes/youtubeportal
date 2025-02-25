@@ -1,4 +1,3 @@
-
 import React from 'react';
 import VideoPlayer from '../components/VideoPlayer';
 import LiveChat, { ChatMessage } from '../components/LiveChat';
@@ -44,44 +43,40 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#0F0F0F]">
-      <div className="max-w-7xl mx-auto p-4">
-        <div className="grid lg:grid-cols-[2fr,1fr] gap-4">
-          <div className="space-y-4">
-            <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
-              <VideoPlayer
-                wistiaId="92627nrxy4"
-                onTimeUpdate={handleTimeUpdate}
-              />
-              <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-3 py-1.5 text-white">
-                <Users className="w-3.5 h-3.5" />
-                <span className="text-sm font-medium">{viewerCount.toLocaleString()} watching</span>
-              </div>
-              <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                <Badge variant="secondary" className="bg-red-600 text-white border-none animate-pulse px-2 py-0.5 text-xs">
-                  LIVE
-                </Badge>
-                <Badge variant="secondary" className="bg-black/80 backdrop-blur-sm text-white border-none px-2 py-0.5 text-xs">
-                  Premium Webinar
-                </Badge>
-              </div>
-            </div>
+      <div className="max-w-5xl mx-auto p-4 space-y-4">
+        <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
+          <VideoPlayer
+            wistiaId="92627nrxy4"
+            onTimeUpdate={handleTimeUpdate}
+          />
+          <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-3 py-1.5 text-white">
+            <Users className="w-3.5 h-3.5" />
+            <span className="text-sm font-medium">{viewerCount.toLocaleString()} watching</span>
           </div>
-          
-          <div className="relative">
-            <div className="absolute inset-0 bg-neutral-900/50 rounded-xl blur-sm -z-10"></div>
-            <div className="relative bg-neutral-900/95 rounded-xl border border-neutral-800 overflow-hidden">
-              <LiveChat
-                messages={CHAT_MESSAGES}
-                currentTime={currentTime}
-              />
-            </div>
+          <div className="absolute bottom-4 left-4 flex items-center gap-2">
+            <Badge variant="secondary" className="bg-red-600 text-white border-none animate-pulse px-2 py-0.5 text-xs">
+              LIVE
+            </Badge>
+            <Badge variant="secondary" className="bg-black/80 backdrop-blur-sm text-white border-none px-2 py-0.5 text-xs">
+              Premium Webinar
+            </Badge>
           </div>
         </div>
 
-        <div className="mt-4 text-center">
+        <div className="text-center">
           <p className="text-red-500 text-sm font-medium animate-pulse">
             Don't miss out! Exclusive bonus content coming up in {Math.max(0, Math.floor(600 - currentTime))} seconds...
           </p>
+        </div>
+        
+        <div className="relative h-[calc(100vh-600px)] min-h-[400px]">
+          <div className="absolute inset-0 bg-neutral-900/50 rounded-xl blur-sm -z-10"></div>
+          <div className="relative bg-neutral-900/95 rounded-xl border border-neutral-800 overflow-hidden h-full">
+            <LiveChat
+              messages={CHAT_MESSAGES}
+              currentTime={currentTime}
+            />
+          </div>
         </div>
       </div>
     </div>
