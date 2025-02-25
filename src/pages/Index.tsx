@@ -57,15 +57,12 @@ const Index = () => {
             <Badge variant="secondary" className="bg-red-600 text-white border-none animate-pulse px-2 py-0.5 text-xs">
               LIVE
             </Badge>
-            <Badge variant="secondary" className="bg-black/80 backdrop-blur-sm text-white border-none px-2 py-0.5 text-xs">
-              Premium Webinar
-            </Badge>
           </div>
         </div>
 
         <div className="text-center">
-          <p className="text-red-500 text-sm font-medium animate-pulse">
-            Don't miss out! Exclusive bonus content coming up in {Math.max(0, Math.floor(600 - currentTime))} seconds...
+          <p className="text-white/90 text-sm font-medium">
+            💡 Pro Tip: Take notes on the revenue strategies shared at 12:45 - they're game-changing!
           </p>
         </div>
         
