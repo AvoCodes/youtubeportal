@@ -3,8 +3,9 @@ import React from 'react';
 import VideoPlayer from '../components/VideoPlayer';
 import LiveChat, { ChatMessage } from '../components/LiveChat';
 import { useToast } from '@/components/ui/use-toast';
+import { Badge } from '@/components/ui/badge';
+import { Users } from 'lucide-react';
 
-// Chat messages synchronized with the webinar content
 const CHAT_MESSAGES: ChatMessage[] = [
   { id: 1, author: "Mike Chen", message: "Ready to learn! 🚀", timestamp: 5 },
   { id: 2, author: "Sarah Parker", message: "Those revenue numbers are insane!", timestamp: 15 },
@@ -25,29 +26,62 @@ const CHAT_MESSAGES: ChatMessage[] = [
 
 const Index = () => {
   const [currentTime, setCurrentTime] = React.useState(0);
+  const [viewerCount, setViewerCount] = React.useState(1328);
   const { toast } = useToast();
+
+  React.useEffect(() => {
+    // Simulate fluctuating viewer count for engagement
+    const interval = setInterval(() => {
+      setViewerCount(prev => prev + Math.floor(Math.random() * 7) - 3);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleTimeUpdate = (time: number) => {
     setCurrentTime(time);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary p-6">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-[2fr,1fr] gap-6">
           <div className="space-y-6">
-            <VideoPlayer
-              wistiaId="92627nrxy4"
-              onTimeUpdate={handleTimeUpdate}
-            />
+            <div className="relative">
+              <VideoPlayer
+                wistiaId="92627nrxy4"
+                onTimeUpdate={handleTimeUpdate}
+              />
+              <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/50 backdrop-blur-sm rounded-full px-4 py-2 text-white animate-fade-in">
+                <Users className="w-4 h-4" />
+                <span className="text-sm font-medium">{viewerCount.toLocaleString()} watching</span>
+              </div>
+              <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                <Badge variant="secondary" className="bg-red-500/80 backdrop-blur-sm text-white border-none animate-pulse">
+                  LIVE
+                </Badge>
+                <Badge variant="secondary" className="bg-black/50 backdrop-blur-sm text-white border-none">
+                  Premium Webinar
+                </Badge>
+              </div>
+            </div>
           </div>
           
-          <div>
-            <LiveChat
-              messages={CHAT_MESSAGES}
-              currentTime={currentTime}
-            />
+          <div className="relative">
+            <div className="absolute -top-2 -left-2 -right-2 -bottom-2 bg-white/5 rounded-xl blur-xl"></div>
+            <div className="relative">
+              <LiveChat
+                messages={CHAT_MESSAGES}
+                currentTime={currentTime}
+              />
+            </div>
           </div>
+        </div>
+
+        <div className="mt-6 text-center">
+          <p className="text-white/80 text-sm animate-pulse">
+            Don't leave! More exclusive content coming up...
+          </p>
         </div>
       </div>
     </div>
