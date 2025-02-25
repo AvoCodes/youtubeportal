@@ -43,24 +43,24 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-[2fr,1fr] gap-6">
-          <div className="space-y-6">
-            <div className="relative">
+    <div className="min-h-screen bg-[#0F0F0F]">
+      <div className="max-w-7xl mx-auto p-4">
+        <div className="grid lg:grid-cols-[2fr,1fr] gap-4">
+          <div className="space-y-4">
+            <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
               <VideoPlayer
                 wistiaId="92627nrxy4"
                 onTimeUpdate={handleTimeUpdate}
               />
-              <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/50 backdrop-blur-sm rounded-full px-4 py-2 text-white animate-fade-in">
-                <Users className="w-4 h-4" />
+              <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-3 py-1.5 text-white">
+                <Users className="w-3.5 h-3.5" />
                 <span className="text-sm font-medium">{viewerCount.toLocaleString()} watching</span>
               </div>
               <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                <Badge variant="secondary" className="bg-red-500/80 backdrop-blur-sm text-white border-none animate-pulse">
+                <Badge variant="secondary" className="bg-red-600 text-white border-none animate-pulse px-2 py-0.5 text-xs">
                   LIVE
                 </Badge>
-                <Badge variant="secondary" className="bg-black/50 backdrop-blur-sm text-white border-none">
+                <Badge variant="secondary" className="bg-black/80 backdrop-blur-sm text-white border-none px-2 py-0.5 text-xs">
                   Premium Webinar
                 </Badge>
               </div>
@@ -68,8 +68,8 @@ const Index = () => {
           </div>
           
           <div className="relative">
-            <div className="absolute -top-2 -left-2 -right-2 -bottom-2 bg-white/5 rounded-xl blur-xl"></div>
-            <div className="relative">
+            <div className="absolute inset-0 bg-neutral-900/50 rounded-xl blur-sm -z-10"></div>
+            <div className="relative bg-neutral-900/95 rounded-xl border border-neutral-800 overflow-hidden">
               <LiveChat
                 messages={CHAT_MESSAGES}
                 currentTime={currentTime}
@@ -78,9 +78,9 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="mt-6 text-center">
-          <p className="text-white/80 text-sm animate-pulse">
-            Don't leave! More exclusive content coming up...
+        <div className="mt-4 text-center">
+          <p className="text-red-500 text-sm font-medium animate-pulse">
+            Don't miss out! Exclusive bonus content coming up in {Math.max(0, Math.floor(600 - currentTime))} seconds...
           </p>
         </div>
       </div>
