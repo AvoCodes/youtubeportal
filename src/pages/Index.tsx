@@ -1,7 +1,7 @@
-
 import React from 'react';
 import VideoPlayer from '../components/VideoPlayer';
 import LiveChat, { ChatMessage } from '../components/LiveChat';
+import VideoTimeline from '../components/VideoTimeline';
 import { useToast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { Users } from 'lucide-react';
@@ -60,10 +60,8 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="text-center">
-          <p className="text-white/90 text-sm font-medium">
-            💡 Pro Tip: Take notes on the revenue strategies shared at 12:45 - they're game-changing!
-          </p>
+        <div className="bg-neutral-900/95 rounded-xl border border-neutral-800 overflow-hidden">
+          <VideoTimeline currentTime={currentTime} duration={1800} />
         </div>
         
         <div className="relative min-h-[600px]">
