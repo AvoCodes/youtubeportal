@@ -28,7 +28,7 @@ const Index = () => {
         <div className="grid lg:grid-cols-[2fr,1fr] gap-6">
           <div className="space-y-6">
             <VideoPlayer
-              wistiaId="YOUR_WISTIA_ID_HERE"
+              wistiaId="92627nrxy4"
               onTimeUpdate={handleTimeUpdate}
             />
           </div>
