@@ -6,6 +6,13 @@ interface VideoPlayerProps {
   onTimeUpdate?: (time: number) => void;
 }
 
+// Add type definition for _wq
+declare global {
+  interface Window {
+    _wq: any[];
+  }
+}
+
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ wistiaId, onTimeUpdate }) => {
   React.useEffect(() => {
     // Load Wistia script
@@ -27,15 +34,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ wistiaId, onTimeUpdate }) => 
     };
 
     // Initialize Wistia player
-    if (window._wq) {
-      window._wq = window._wq || [];
-      window._wq.push({
-        id: wistiaId,
-        onReady: (video: any) => {
-          video.bind('timechange', () => handleTimeUpdate(video));
-        },
-      });
-    }
+    window._wq = window._wq || [];
+    window._wq.push({
+      id: wistiaId,
+      onReady: (video: any) => {
+        video.bind('timechange', () => handleTimeUpdate(video));
+      },
+    });
   }, [wistiaId, onTimeUpdate]);
 
   return (
