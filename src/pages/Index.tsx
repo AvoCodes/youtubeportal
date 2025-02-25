@@ -4,14 +4,23 @@ import VideoPlayer from '../components/VideoPlayer';
 import LiveChat, { ChatMessage } from '../components/LiveChat';
 import { useToast } from '@/components/ui/use-toast';
 
-// Simulated chat messages
+// Chat messages synchronized with the webinar content
 const CHAT_MESSAGES: ChatMessage[] = [
-  { id: 1, author: "Sarah Johnson", message: "Excited to be here!", timestamp: 5 },
-  { id: 2, author: "David Chen", message: "This is exactly what I've been looking for.", timestamp: 15 },
-  { id: 3, author: "Emma Williams", message: "The insights are amazing!", timestamp: 30 },
-  { id: 4, author: "Michael Brown", message: "Can't wait to implement these strategies.", timestamp: 45 },
-  { id: 5, author: "Lisa Anderson", message: "This is transformative content.", timestamp: 60 },
-  // Add more messages as needed
+  { id: 1, author: "Mike Chen", message: "Ready to learn! 🚀", timestamp: 5 },
+  { id: 2, author: "Sarah Parker", message: "Those revenue numbers are insane!", timestamp: 15 },
+  { id: 3, author: "Alex Thompson", message: "Never knew YouTube was paying creators this much", timestamp: 30 },
+  { id: 4, author: "Rachel Kim", message: "$57/hour equivalent? That's better than my current job", timestamp: 45 },
+  { id: 5, author: "James Wilson", message: "Love that this doesn't require showing your face", timestamp: 60 },
+  { id: 6, author: "Emily Davis", message: "The AI tools look so easy to use", timestamp: 90 },
+  { id: 7, author: "David Martinez", message: "This is exactly what I've been looking for - a way to start without being on camera", timestamp: 120 },
+  { id: 8, author: "Lisa Wong", message: "Those example channels are getting crazy views!", timestamp: 150 },
+  { id: 9, author: "Tom Bradley", message: "Impressive how fast you can create content with AI", timestamp: 180 },
+  { id: 10, author: "Jessica Lee", message: "Love the transparency about the results", timestamp: 210 },
+  { id: 11, author: "Chris Anderson", message: "The niche selection strategy makes so much sense", timestamp: 240 },
+  { id: 12, author: "Maria Garcia", message: "That AI video generation is mind-blowing 🤯", timestamp: 270 },
+  { id: 13, author: "Kevin Zhang", message: "The math behind scaling multiple channels is compelling", timestamp: 300 },
+  { id: 14, author: "Amanda White", message: "Those student success stories are inspiring!", timestamp: 330 },
+  { id: 15, author: "Ryan Cooper", message: "The community aspect sounds really valuable", timestamp: 360 }
 ];
 
 const Index = () => {
