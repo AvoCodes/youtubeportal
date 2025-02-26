@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import VideoPlayer from '../components/VideoPlayer';
 import LiveChat, { ChatMessage } from '../components/LiveChat';
@@ -10,7 +9,7 @@ import WebinarPoll from '../components/webinar/WebinarPoll';
 import WebinarUpcomingTopics from '../components/webinar/WebinarUpcomingTopics';
 import { useToast } from '@/components/ui/use-toast';
 import { Badge } from '@/components/ui/badge';
-import { Clock, ArrowUpRight, Users } from 'lucide-react';
+import { Clock, ArrowUpRight, Users, ThumbsUp } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { CHAT_MESSAGES, NEW_ATTENDEES, POLLS, MILESTONES } from '../components/webinar/constants';
@@ -179,15 +178,33 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F0F0F] pb-16">
-      <div className="max-w-6xl mx-auto p-4 space-y-6">
-        <WebinarHeader 
-          viewerCount={viewerCount}
-          likesCount={likesCount}
-          hasLiked={hasLiked}
-          onLikeClick={handleLikeClick}
-        />
+    <div className="min-h-screen bg-white pb-16">
+      <div className="w-full p-4 text-center mb-6 bg-white">
+        <div className="max-w-5xl mx-auto relative">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#0f172a] tracking-tight mb-2">
+            How To Tap Into 
+            <div className="inline-flex items-center mx-2">
+              <div className="bg-red-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-2">
+                <span className="text-xl">▶</span>
+              </div>
+              <span>YouTube's $15.5 Billion</span>
+            </div>
+          </h1>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] tracking-tight">
+            Payout Program <span className="text-blue-600">Using AI</span>
+          </h2>
+        </div>
+        
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 z-0">
+          <div className="absolute top-10 left-10 grid grid-cols-10 gap-4">
+            {Array(100).fill(0).map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+            ))}
+          </div>
+        </div>
+      </div>
 
+      <div className="max-w-6xl mx-auto p-4 space-y-6">
         <div className="grid md:grid-cols-3 gap-4">
           <div className="md:col-span-2 space-y-4">
             <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
@@ -195,28 +212,25 @@ const Index = () => {
                 wistiaId="92627nrxy4"
                 onTimeUpdate={handleTimeUpdate}
               />
-              <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/80 backdrop-blur-sm rounded-full px-3 py-1.5 text-white">
-                <Badge variant="secondary" className="bg-red-600 text-white border-none animate-pulse px-2 py-0.5 text-xs">
-                  LIVE
-                </Badge>
-                <span className="text-sm font-medium">{viewerCount.toLocaleString()} watching</span>
+              <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-red-600 rounded-full px-3 py-1.5 text-white">
+                <span className="text-sm font-medium">LIVE</span>
               </div>
               
               {showNotification && (
-                <div className="absolute top-16 right-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 text-white shadow-lg border border-gray-700 max-w-xs animate-in fade-in slide-in-from-top duration-300">
+                <div className="absolute top-16 right-4 bg-white rounded-lg p-3 text-black shadow-lg border border-gray-200 max-w-xs animate-in fade-in slide-in-from-top duration-300">
                   <h4 className="font-semibold text-sm">{notification.title}</h4>
-                  <p className="text-xs text-gray-300">{notification.message}</p>
+                  <p className="text-xs text-gray-700">{notification.message}</p>
                 </div>
               )}
               
               {showRecentJoins && (
-                <div className="absolute bottom-16 left-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 text-white shadow-lg border border-gray-700 animate-in fade-in slide-in-from-bottom duration-300">
+                <div className="absolute bottom-16 left-4 bg-white rounded-lg p-3 text-black shadow-lg border border-gray-200 animate-in fade-in slide-in-from-bottom duration-300">
                   <div className="flex items-center gap-2 mb-2">
-                    <Users className="w-4 h-4 text-blue-400" />
+                    <Users className="w-4 h-4 text-blue-600" />
                     <span className="text-xs font-medium">New attendees joining</span>
                   </div>
                   {recentJoins.map((name, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-gray-300 chat-message" style={{animationDelay: `${i * 300}ms`}}>
+                    <div key={i} className="flex items-center gap-2 text-xs text-gray-700 chat-message" style={{animationDelay: `${i * 300}ms`}}>
                       <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs">
                         {name.charAt(0)}
                       </div>
@@ -227,15 +241,15 @@ const Index = () => {
               )}
             </div>
 
-            <div className="bg-neutral-900/95 rounded-xl border border-neutral-800 overflow-hidden">
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
               <VideoTimeline currentTime={currentTime} duration={1800} />
             </div>
 
             {currentTime >= 1020 && (
-              <div className="bg-gradient-to-r from-blue-900/70 to-purple-900/70 rounded-xl border border-blue-800/50 p-4 flex flex-col md:flex-row justify-between items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-4 flex flex-col md:flex-row justify-between items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <div>
                   <h3 className="text-white font-semibold text-lg">Limited-time offer for webinar attendees</h3>
-                  <p className="text-blue-200 text-sm mb-2">Only {seatsRemaining} spots remaining at this pricing</p>
+                  <p className="text-blue-100 text-sm mb-2">Only {seatsRemaining} spots remaining at this pricing</p>
                   {countdownActive && (
                     <div className="flex items-center gap-2 text-white">
                       <Clock className="w-4 h-4 text-yellow-300" />
@@ -258,7 +272,7 @@ const Index = () => {
           </div>
 
           <div className="space-y-4">
-            <div className="bg-neutral-900/95 rounded-xl border border-neutral-800 overflow-hidden h-[500px]">
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden h-[500px] shadow-sm">
               <LiveChat
                 messages={messages}
                 currentTime={currentTime}
@@ -277,21 +291,37 @@ const Index = () => {
             )}
             
             <WebinarUpcomingTopics currentTime={currentTime} />
+            
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden p-4 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm font-medium">{viewerCount.toLocaleString()} watching now</span>
+                </div>
+                <button 
+                  className={`flex items-center gap-2 ${hasLiked ? 'text-blue-600' : 'text-gray-700'}`}
+                  onClick={handleLikeClick}
+                >
+                  <ThumbsUp className="w-4 h-4" />
+                  <span className="text-sm">{likesCount.toLocaleString()}</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
       <AlertDialog open={showMilestoneOffer && currentTime >= 1020} onOpenChange={setShowMilestoneOffer}>
-        <AlertDialogContent className="bg-gradient-to-br from-blue-900 to-indigo-900 border-blue-700">
+        <AlertDialogContent className="bg-white border-blue-100">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white text-xl">
+            <AlertDialogTitle className="text-blue-900 text-xl">
               {currentMilestone.type === 'early-bird' && "🔥 Early Bird Special Offer"}
               {currentMilestone.type === 'bonus-module' && "🎁 Exclusive Bonus Module Unlocked"}
               {currentMilestone.type === 'final-offer' && "⏰ Last Chance Special Offer"}
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-blue-200">
+            <AlertDialogDescription className="text-gray-700">
               {currentMilestone.type === 'early-bird' && 
-                "For the next 20 minutes only, get 50% off our AI YouTube Masterclass when you enroll today!"
+                "For the next 20 minutes only, get 50% off our YouTube Payout Program Masterclass when you enroll today!"
               }
               {currentMilestone.type === 'bonus-module' && 
                 "We're adding our Advanced AI Script Generator module ($497 value) for free when you enroll during this webinar!"
@@ -302,11 +332,11 @@ const Index = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex flex-col gap-2 sm:flex-row">
-            <AlertDialogAction className="bg-blue-500 hover:bg-blue-600 text-white gap-2">
+            <AlertDialogAction className="bg-blue-600 hover:bg-blue-700 text-white gap-2">
               Claim This Offer
               <ArrowUpRight className="w-4 h-4" />
             </AlertDialogAction>
-            <Button variant="outline" onClick={handleCloseMilestoneOffer} className="text-white border-blue-400">
+            <Button variant="outline" onClick={handleCloseMilestoneOffer} className="text-blue-600">
               Continue Watching
             </Button>
           </AlertDialogFooter>
