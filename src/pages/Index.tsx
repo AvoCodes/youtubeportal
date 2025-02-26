@@ -1,21 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
 import VideoPlayer from '../components/VideoPlayer';
-import LiveChat, { ChatMessage } from '../components/LiveChat';
 import VideoTimeline from '../components/VideoTimeline';
 import CTAButton from '../components/CTAButton';
 import WebinarPoll from '../components/webinar/WebinarPoll';
 import { useToast } from '@/components/ui/use-toast';
-import { Clock, ArrowUpRight, Users } from 'lucide-react';
+import { Clock, ArrowUpRight } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { CHAT_MESSAGES, NEW_ATTENDEES, POLLS, MILESTONES } from '../components/webinar/constants';
+import { NEW_ATTENDEES, POLLS, MILESTONES } from '../components/webinar/constants';
 
 const Index = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [viewerCount, setViewerCount] = useState(1328);
-  const [likesCount, setLikesCount] = useState(457);
-  const [hasLiked, setHasLiked] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState({ title: "", message: "" });
   const [showActivePoll, setShowActivePoll] = useState(false);
@@ -24,55 +21,18 @@ const Index = () => {
   const [pollResults, setPollResults] = useState<number[]>([]);
   const [showMilestoneOffer, setShowMilestoneOffer] = useState(false);
   const [currentMilestone, setCurrentMilestone] = useState(MILESTONES[0]);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [attendees, setAttendees] = useState<{name: string, joined: boolean}[]>(
-    NEW_ATTENDEES.map(a => ({ name: a.name, joined: false }))
-  );
-  const [showRecentJoins, setShowRecentJoins] = useState(false);
-  const [recentJoins, setRecentJoins] = useState<string[]>([]);
   const [seatsRemaining, setSeatsRemaining] = useState(37);
   const [countdownActive, setCountdownActive] = useState(false);
-  const [countdown, setCountdown] = useState(600); // 10 minutes in seconds
+  const [countdown, setCountdown] = useState(600);
   
   const { toast } = useToast();
 
   useEffect(() => {
-    const initialMessages = CHAT_MESSAGES.filter(msg => msg.timestamp < 30);
-    setMessages(initialMessages);
-  }, []);
-
-  useEffect(() => {
     const handleTimeBasedEvents = () => {
-      const newMessages = CHAT_MESSAGES.filter(
-        msg => msg.timestamp <= currentTime && 
-        !messages.some(m => m.id === msg.id)
-      );
-      
-      if (newMessages.length > 0) {
-        setMessages(prev => [...prev, ...newMessages]);
-      }
-      
       NEW_ATTENDEES.forEach(attendee => {
         if (Math.abs(currentTime - attendee.time) < 5) {
-          const index = attendees.findIndex(a => a.name === attendee.name);
-          if (index !== -1 && !attendees[index].joined) {
-            const updatedAttendees = [...attendees];
-            updatedAttendees[index].joined = true;
-            setAttendees(updatedAttendees);
-            
-            setRecentJoins(prev => [attendee.name, ...prev].slice(0, 3));
-            setShowRecentJoins(true);
-            setTimeout(() => setShowRecentJoins(false), 5000);
-            
-            if (Math.random() > 0.3) {
-              setSeatsRemaining(prev => Math.max(prev - 1, 5));
-            }
-            
-            toast({
-              title: "New Attendee!",
-              description: `${attendee.name} just joined the webinar`,
-              duration: 3000,
-            });
+          if (Math.random() > 0.3) {
+            setSeatsRemaining(prev => Math.max(prev - 1, 5));
           }
         }
       });
@@ -99,26 +59,7 @@ const Index = () => {
     };
     
     handleTimeBasedEvents();
-  }, [currentTime, messages, attendees, toast]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setViewerCount(prev => {
-        const change = Math.floor(Math.random() * 12) - 3;
-        return prev + change;
-      });
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLikesCount(prev => prev + Math.floor(Math.random() * 3));
-    }, 15000);
-
-    return () => clearInterval(interval);
-  }, []);
+  }, [currentTime]);
 
   useEffect(() => {
     let timer: number;
@@ -135,20 +76,6 @@ const Index = () => {
 
   const handleTimeUpdate = (time: number) => {
     setCurrentTime(time);
-  };
-
-  const handleLikeClick = () => {
-    if (!hasLiked) {
-      setLikesCount(prev => prev + 1);
-      setHasLiked(true);
-      
-      setNotification({
-        title: "Thanks for your feedback!",
-        message: "We appreciate your engagement with our content."
-      });
-      setShowNotification(true);
-      setTimeout(() => setShowNotification(false), 3000);
-    }
   };
 
   const handlePollOptionSelect = (index: number) => {
@@ -177,83 +104,53 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white pb-16">
       <div className="max-w-[1600px] mx-auto p-4 pt-8 md:pt-12 space-y-6">
-        <div className="grid md:grid-cols-4 gap-4">
-          <div className="md:col-span-3 space-y-4">
-            <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
-              <VideoPlayer
-                wistiaId="92627nrxy4"
-                onTimeUpdate={handleTimeUpdate}
-              />
-              <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-red-600 rounded-full px-3 py-1.5 text-white">
-                <span className="text-sm font-medium">LIVE</span>
-              </div>
-              
-              {showNotification && (
-                <div className="absolute top-16 right-4 bg-white rounded-lg p-3 text-black shadow-lg border border-gray-200 max-w-xs animate-in fade-in slide-in-from-top duration-300">
-                  <h4 className="font-semibold text-sm">{notification.title}</h4>
-                  <p className="text-xs text-gray-700">{notification.message}</p>
-                </div>
-              )}
-              
-              {showRecentJoins && (
-                <div className="absolute bottom-16 left-4 bg-white rounded-lg p-3 text-black shadow-lg border border-gray-200 animate-in fade-in slide-in-from-bottom duration-300">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Users className="w-4 h-4 text-blue-600" />
-                    <span className="text-xs font-medium">New attendees joining</span>
-                  </div>
-                  {recentJoins.map((name, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-gray-700 chat-message" style={{animationDelay: `${i * 300}ms`}}>
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs">
-                        {name.charAt(0)}
-                      </div>
-                      <span>{name} just joined</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+        <div className="space-y-4">
+          <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
+            <VideoPlayer
+              wistiaId="92627nrxy4"
+              onTimeUpdate={handleTimeUpdate}
+            />
+            <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-red-600 rounded-full px-3 py-1.5 text-white">
+              <span className="text-sm font-medium">LIVE</span>
             </div>
-
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-              <VideoTimeline currentTime={currentTime} duration={1800} />
-            </div>
-
-            {currentTime >= 1020 && (
-              <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-4 flex flex-col md:flex-row justify-between items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                <div>
-                  <h3 className="text-white font-semibold text-lg">Limited-time offer for webinar attendees</h3>
-                  <p className="text-blue-100 text-sm mb-2">Only {seatsRemaining} spots remaining at this pricing</p>
-                  {countdownActive && (
-                    <div className="flex items-center gap-2 text-white">
-                      <Clock className="w-4 h-4 text-yellow-300" />
-                      <span className="text-yellow-300 font-mono">{formatCountdown(countdown)}</span>
-                      <span className="text-xs">until offer expires</span>
-                    </div>
-                  )}
-                </div>
-                <CTAButton onClick={() => {
-                  toast({
-                    title: "🎉 Great choice!",
-                    description: "You're being redirected to the enrollment page.",
-                    duration: 3000,
-                  });
-                }} />
+            
+            {showNotification && (
+              <div className="absolute top-16 right-4 bg-white rounded-lg p-3 text-black shadow-lg border border-gray-200 max-w-xs animate-in fade-in slide-in-from-top duration-300">
+                <h4 className="font-semibold text-sm">{notification.title}</h4>
+                <p className="text-xs text-gray-700">{notification.message}</p>
               </div>
             )}
           </div>
 
-          <div className="space-y-4">
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden h-[600px] shadow-sm">
-              <LiveChat
-                messages={messages}
-                currentTime={currentTime}
-                viewerCount={viewerCount}
-                likesCount={likesCount}
-                onLike={handleLikeClick}
-                hasLiked={hasLiked}
-              />
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+            <VideoTimeline currentTime={currentTime} duration={1800} />
+          </div>
+
+          {currentTime >= 1020 && (
+            <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-4 flex flex-col md:flex-row justify-between items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <div>
+                <h3 className="text-white font-semibold text-lg">Limited-time offer for webinar attendees</h3>
+                <p className="text-blue-100 text-sm mb-2">Only {seatsRemaining} spots remaining at this pricing</p>
+                {countdownActive && (
+                  <div className="flex items-center gap-2 text-white">
+                    <Clock className="w-4 h-4 text-yellow-300" />
+                    <span className="text-yellow-300 font-mono">{formatCountdown(countdown)}</span>
+                    <span className="text-xs">until offer expires</span>
+                  </div>
+                )}
+              </div>
+              <CTAButton onClick={() => {
+                toast({
+                  title: "🎉 Great choice!",
+                  description: "You're being redirected to the enrollment page.",
+                  duration: 3000,
+                });
+              }} />
             </div>
-            
-            {showActivePoll && (
+          )}
+          
+          {showActivePoll && (
+            <div className="max-w-2xl mx-auto">
               <WebinarPoll
                 question={activePoll.question}
                 options={activePoll.options}
@@ -262,8 +159,8 @@ const Index = () => {
                 onOptionSelect={handlePollOptionSelect}
                 totalVotes={pollResults.reduce((a, b) => a + b, 0)}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
       
