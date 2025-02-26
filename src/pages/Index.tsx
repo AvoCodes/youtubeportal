@@ -176,7 +176,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white pb-16">
-      <div className="max-w-6xl mx-auto p-4 space-y-6">
+      <div className="max-w-6xl mx-auto p-4 pt-8 md:pt-12 space-y-6">
         <div className="grid md:grid-cols-3 gap-4">
           <div className="md:col-span-2 space-y-4">
             <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
