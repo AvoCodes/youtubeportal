@@ -48,28 +48,28 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
   }, [currentTime, sections, toast]);
 
   return (
-    <div className="relative py-6 px-4">
-      <div className="absolute right-4 top-2 flex items-center gap-2 bg-yellow-500/10 text-yellow-500 rounded-full px-3 py-1.5">
+    <div className="relative py-6 px-4 bg-gray-50">
+      <div className="absolute right-4 top-2 flex items-center gap-2 bg-amber-100 text-amber-700 rounded-full px-3 py-1.5">
         <Trophy className="w-4 h-4" />
         <span className="font-medium">{totalPoints} points</span>
       </div>
       
-      <Progress value={progress} className="h-2 mb-6" />
+      <Progress value={progress} className="h-2 mb-6 bg-gray-200" />
       
       <div className="grid grid-cols-5 gap-2">
         {sections.map((section) => (
           <div 
             key={section.id}
             className={`relative flex flex-col items-center group ${
-              section.completed ? 'text-green-500' : 'text-white/60'
+              section.completed ? 'text-green-600' : 'text-gray-600'
             }`}
           >
             <div className={`w-4 h-4 rounded-full flex items-center justify-center mb-2 transition-colors ${
-              section.completed ? 'bg-green-500' : 'bg-white/20'
+              section.completed ? 'bg-green-500' : 'bg-gray-300'
             }`}>
               {section.completed && <Check className="w-3 h-3 text-white" />}
             </div>
-            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-neutral-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap">
+            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap">
               {section.title}
             </div>
           </div>

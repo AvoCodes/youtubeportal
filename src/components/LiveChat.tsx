@@ -38,16 +38,16 @@ const LiveChat: React.FC<LiveChatProps> = ({ messages }) => {
   }, [messages, sortBy]);
 
   return (
-    <div className="h-full rounded-lg p-4 flex flex-col text-white">
+    <div className="h-full rounded-lg p-4 flex flex-col bg-gray-50">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-gray-900">
           <MessagesSquare className="w-5 h-5" />
           <h2 className="font-semibold">{messages.length} Comments</h2>
         </div>
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="text-white hover:bg-white/10">
+            <Button variant="ghost" className="text-gray-700 hover:bg-gray-200">
               Sort by
             </Button>
           </DropdownMenuTrigger>
@@ -70,7 +70,7 @@ const LiveChat: React.FC<LiveChatProps> = ({ messages }) => {
           <input
             type="text"
             placeholder="Add a comment..."
-            className="w-full bg-transparent border-b border-white/20 pb-1 focus:outline-none focus:border-white/40 placeholder:text-white/40"
+            className="w-full bg-white border-b border-gray-300 pb-1 focus:outline-none focus:border-blue-500 placeholder:text-gray-500 text-gray-900"
           />
         </div>
       </div>
@@ -79,7 +79,7 @@ const LiveChat: React.FC<LiveChatProps> = ({ messages }) => {
         <div className="space-y-6">
           {sortedMessages.map((msg) => (
             <div key={msg.id} className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-full bg-neutral-700 flex items-center justify-center overflow-hidden flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center overflow-hidden flex-shrink-0 text-white">
                 {msg.avatar ? (
                   <img src={msg.avatar} alt={msg.author} className="w-full h-full object-cover" />
                 ) : (
@@ -88,19 +88,19 @@ const LiveChat: React.FC<LiveChatProps> = ({ messages }) => {
               </div>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-sm">{msg.author}</span>
-                  <span className="text-white/40 text-sm">{msg.timeAgo || '7 days ago'}</span>
+                  <span className="font-medium text-sm text-gray-900">{msg.author}</span>
+                  <span className="text-gray-500 text-sm">{msg.timeAgo || '7 days ago'}</span>
                 </div>
-                <p className="text-sm text-white/90">{msg.message}</p>
+                <p className="text-sm text-gray-700">{msg.message}</p>
                 <div className="flex items-center gap-4 mt-2">
-                  <button className="flex items-center gap-1 text-white/60 hover:text-white">
+                  <button className="flex items-center gap-1 text-gray-600 hover:text-blue-600">
                     <ThumbsUp className="w-4 h-4" />
                     <span className="text-xs">{msg.likes || 0}</span>
                   </button>
-                  <button className="flex items-center text-white/60 hover:text-white">
+                  <button className="flex items-center text-gray-600 hover:text-blue-600">
                     <ThumbsDown className="w-4 h-4" />
                   </button>
-                  <button className="text-white/60 hover:text-white text-sm">
+                  <button className="text-gray-600 hover:text-blue-600 text-sm">
                     Reply
                   </button>
                 </div>
