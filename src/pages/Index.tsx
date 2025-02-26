@@ -120,14 +120,14 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full">
               <Trophy className="w-4 h-4" />
-              <span className="font-medium">Advanced Training</span>
+              <span className="font-medium">Beginner Friendly</span>
             </div>
           </div>
           
           <h1 className="text-xl md:text-2xl font-medium text-slate-900 mb-2">
-            AI-Powered YouTube Success: Build Your Channel Without Showing Your Face
+            The YouTube Portal: Making $57/Hr Without Showing Your Face.
           </h1>
-          <p className="text-slate-600">With John Smith, YouTube Automation Expert</p>
+          <p className="text-slate-600">With Daniel Bitton, Made First Million At 17.</p>
         </div>
 
         {/* Main Content Area */}
