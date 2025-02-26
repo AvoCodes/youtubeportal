@@ -176,9 +176,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white pb-16">
-      <div className="max-w-6xl mx-auto p-4 pt-8 md:pt-12 space-y-6">
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="md:col-span-2 space-y-4">
+      <div className="max-w-[1600px] mx-auto p-4 pt-8 md:pt-12 space-y-6">
+        <div className="grid md:grid-cols-4 gap-4">
+          <div className="md:col-span-3 space-y-4">
             <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
               <VideoPlayer
                 wistiaId="92627nrxy4"
@@ -242,7 +242,7 @@ const Index = () => {
           </div>
 
           <div className="space-y-4">
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden h-[500px] shadow-sm">
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden h-[600px] shadow-sm">
               <LiveChat
                 messages={messages}
                 currentTime={currentTime}
