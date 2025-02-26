@@ -5,7 +5,7 @@ import VideoTimeline from '../components/VideoTimeline';
 import CTAButton from '../components/CTAButton';
 import WebinarPoll from '../components/webinar/WebinarPoll';
 import { useToast } from '@/components/ui/use-toast';
-import { Clock, ArrowUpRight } from 'lucide-react';
+import { Clock, ArrowUpRight, Users, CheckCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { NEW_ATTENDEES, POLLS, MILESTONES } from '../components/webinar/constants';
@@ -102,53 +102,95 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pb-16">
       <div className="max-w-[1600px] mx-auto p-4 pt-8 md:pt-12 space-y-6">
+        {/* Social Proof Banner */}
+        <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-3 flex items-center justify-center gap-2 text-sm text-indigo-600 animate-in fade-in slide-in-from-top-4 duration-700">
+          <Users className="w-4 h-4" />
+          <span>
+            <strong className="font-medium">{viewerCount.toLocaleString()}</strong> people are watching this exclusive training
+          </span>
+        </div>
+
         <div className="space-y-4">
-          <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl">
+          {/* Main Webinar Title */}
+          <h1 className="text-2xl md:text-3xl font-semibold text-slate-900 text-center max-w-3xl mx-auto">
+            Discover How to Build a <span className="text-blue-600">Profitable YouTube Channel</span> Using AI - Without Showing Your Face
+          </h1>
+
+          {/* Value Props */}
+          <div className="flex flex-wrap justify-center gap-4 mb-6">
+            {[
+              "Generate $3,000-$5,000/month",
+              "100% Automated Content",
+              "Step-by-Step System"
+            ].map((benefit) => (
+              <div key={benefit} className="flex items-center gap-2 text-sm text-slate-700">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>{benefit}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Video Player Container */}
+          <div className="relative rounded-xl overflow-hidden bg-black shadow-2xl border-8 border-white">
             <VideoPlayer
               wistiaId="92627nrxy4"
               onTimeUpdate={handleTimeUpdate}
             />
             <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-red-600 rounded-full px-3 py-1.5 text-white">
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
               <span className="text-sm font-medium">LIVE</span>
             </div>
             
             {showNotification && (
-              <div className="absolute top-16 right-4 bg-white rounded-lg p-3 text-black shadow-lg border border-gray-200 max-w-xs animate-in fade-in slide-in-from-top duration-300">
+              <div className="absolute top-16 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 text-black shadow-lg border border-gray-200 max-w-xs animate-in fade-in slide-in-from-top duration-300">
                 <h4 className="font-semibold text-sm">{notification.title}</h4>
                 <p className="text-xs text-gray-700">{notification.message}</p>
               </div>
             )}
           </div>
 
+          {/* Progress Timeline */}
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
             <VideoTimeline currentTime={currentTime} duration={1800} />
           </div>
 
+          {/* Limited Time Offer */}
           {currentTime >= 1020 && (
-            <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-4 flex flex-col md:flex-row justify-between items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <div>
-                <h3 className="text-white font-semibold text-lg">Limited-time offer for webinar attendees</h3>
-                <p className="text-blue-100 text-sm mb-2">Only {seatsRemaining} spots remaining at this pricing</p>
-                {countdownActive && (
-                  <div className="flex items-center gap-2 text-white">
-                    <Clock className="w-4 h-4 text-yellow-300" />
-                    <span className="text-yellow-300 font-mono">{formatCountdown(countdown)}</span>
-                    <span className="text-xs">until offer expires</span>
-                  </div>
-                )}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <div className="space-y-3">
+                <div className="inline-block bg-yellow-400 text-blue-900 text-xs font-semibold px-3 py-1 rounded-full">
+                  Special Webinar Offer
+                </div>
+                <h3 className="text-white font-semibold text-xl md:text-2xl">Get Started Today for 50% Off</h3>
+                <div className="space-y-2">
+                  <p className="text-blue-100 flex items-center gap-2">
+                    <Users className="w-4 h-4 text-yellow-400" />
+                    <span>Only {seatsRemaining} spots remaining at this pricing</span>
+                  </p>
+                  {countdownActive && (
+                    <div className="flex items-center gap-2 text-white">
+                      <Clock className="w-4 h-4 text-yellow-400" />
+                      <span className="font-mono text-lg">{formatCountdown(countdown)}</span>
+                      <span className="text-blue-200">until offer expires</span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <CTAButton onClick={() => {
-                toast({
-                  title: "🎉 Great choice!",
-                  description: "You're being redirected to the enrollment page.",
-                  duration: 3000,
-                });
-              }} />
+              <div className="w-full md:w-auto">
+                <CTAButton onClick={() => {
+                  toast({
+                    title: "🎉 Great choice!",
+                    description: "You're being redirected to the enrollment page.",
+                    duration: 3000,
+                  });
+                }} />
+              </div>
             </div>
           )}
           
+          {/* Interactive Poll */}
           {showActivePoll && (
             <div className="max-w-2xl mx-auto">
               <WebinarPoll
@@ -164,32 +206,67 @@ const Index = () => {
         </div>
       </div>
       
+      {/* Special Offer Dialog */}
       <AlertDialog open={showMilestoneOffer && currentTime >= 1020} onOpenChange={setShowMilestoneOffer}>
-        <AlertDialogContent className="bg-white border-blue-100">
+        <AlertDialogContent className="bg-white border-blue-100 max-w-xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-blue-900 text-xl">
-              {currentMilestone.type === 'early-bird' && "🔥 Early Bird Special Offer"}
-              {currentMilestone.type === 'bonus-module' && "🎁 Exclusive Bonus Module Unlocked"}
-              {currentMilestone.type === 'final-offer' && "⏰ Last Chance Special Offer"}
+            <AlertDialogTitle className="text-blue-900 text-2xl text-center">
+              {currentMilestone.type === 'early-bird' && "🔥 Early Bird Special: Save 50% Today"}
+              {currentMilestone.type === 'bonus-module' && "🎁 Exclusive Fast-Action Bonus Unlocked"}
+              {currentMilestone.type === 'final-offer' && "⏰ Last Chance: Special Pricing Ends Soon"}
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-gray-700">
-              {currentMilestone.type === 'early-bird' && 
-                "For the next 20 minutes only, get 50% off our YouTube Payout Program Masterclass when you enroll today!"
-              }
-              {currentMilestone.type === 'bonus-module' && 
-                "We're adding our Advanced AI Script Generator module ($497 value) for free when you enroll during this webinar!"
-              }
-              {currentMilestone.type === 'final-offer' && 
-                "This is your final opportunity to join at this special webinar-only price. Only a few spots remaining!"
-              }
+            <AlertDialogDescription className="text-gray-700 text-center text-lg">
+              {currentMilestone.type === 'early-bird' && (
+                <>
+                  <p className="mb-4">Lock in your 50% discount on our complete YouTube Payout Program Masterclass!</p>
+                  <div className="flex justify-center items-center gap-4 text-2xl font-bold my-6">
+                    <span className="text-gray-400 line-through">$997</span>
+                    <span className="text-blue-600">$497</span>
+                  </div>
+                </>
+              )}
+              {currentMilestone.type === 'bonus-module' && (
+                <>
+                  <p className="mb-4">Get our Advanced AI Script Generator module ($497 value) FREE when you enroll now!</p>
+                  <div className="bg-green-50 text-green-700 p-4 rounded-lg my-4">
+                    <p className="font-medium">Bonus Includes:</p>
+                    <ul className="text-left text-base mt-2">
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        Custom AI prompts library
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        Viral hook templates
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        SEO optimization tools
+                      </li>
+                    </ul>
+                  </div>
+                </>
+              )}
+              {currentMilestone.type === 'final-offer' && (
+                <>
+                  <p className="mb-4">Last chance to join at the special webinar-only price!</p>
+                  <div className="bg-red-50 text-red-600 p-3 rounded-lg my-4">
+                    Price increases in {formatCountdown(countdown)}
+                  </div>
+                </>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex flex-col gap-2 sm:flex-row">
-            <AlertDialogAction className="bg-blue-600 hover:bg-blue-700 text-white gap-2">
-              Claim This Offer
-              <ArrowUpRight className="w-4 h-4" />
+          <AlertDialogFooter className="flex flex-col gap-3">
+            <AlertDialogAction className="w-full bg-blue-600 hover:bg-blue-700 text-lg text-white gap-2 p-6">
+              Yes, I Want To Join Now!
+              <ArrowUpRight className="w-5 h-5" />
             </AlertDialogAction>
-            <Button variant="outline" onClick={handleCloseMilestoneOffer} className="text-blue-600">
+            <Button 
+              variant="outline" 
+              onClick={handleCloseMilestoneOffer} 
+              className="text-blue-600"
+            >
               Continue Watching
             </Button>
           </AlertDialogFooter>
