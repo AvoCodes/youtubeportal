@@ -276,6 +276,10 @@ const Index = () => {
               <LiveChat
                 messages={messages}
                 currentTime={currentTime}
+                viewerCount={viewerCount}
+                likesCount={likesCount}
+                onLike={handleLikeClick}
+                hasLiked={hasLiked}
               />
             </div>
             
@@ -291,22 +295,6 @@ const Index = () => {
             )}
             
             <WebinarUpcomingTopics currentTime={currentTime} />
-            
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden p-4 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-blue-600" />
-                  <span className="text-sm font-medium">{viewerCount.toLocaleString()} watching now</span>
-                </div>
-                <button 
-                  className={`flex items-center gap-2 ${hasLiked ? 'text-blue-600' : 'text-gray-700'}`}
-                  onClick={handleLikeClick}
-                >
-                  <ThumbsUp className="w-4 h-4" />
-                  <span className="text-sm">{likesCount.toLocaleString()}</span>
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
