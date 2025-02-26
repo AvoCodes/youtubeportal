@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import VideoPlayer from '../components/VideoPlayer';
 import LiveChat, { ChatMessage } from '../components/LiveChat';
@@ -5,7 +6,7 @@ import VideoTimeline from '../components/VideoTimeline';
 import CTAButton from '../components/CTAButton';
 import WebinarPoll from '../components/webinar/WebinarPoll';
 import { useToast } from '@/components/ui/use-toast';
-import { Clock } from 'lucide-react';
+import { Clock, ArrowUpRight, Users } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { CHAT_MESSAGES, NEW_ATTENDEES, POLLS, MILESTONES } from '../components/webinar/constants';
