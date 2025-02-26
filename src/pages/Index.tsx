@@ -3,13 +3,9 @@ import VideoPlayer from '../components/VideoPlayer';
 import LiveChat, { ChatMessage } from '../components/LiveChat';
 import VideoTimeline from '../components/VideoTimeline';
 import CTAButton from '../components/CTAButton';
-import WebinarHeader from '../components/webinar/WebinarHeader';
-import WebinarInfoTabs from '../components/webinar/WebinarInfoTabs';
 import WebinarPoll from '../components/webinar/WebinarPoll';
-import WebinarUpcomingTopics from '../components/webinar/WebinarUpcomingTopics';
 import { useToast } from '@/components/ui/use-toast';
-import { Badge } from '@/components/ui/badge';
-import { Clock, ArrowUpRight, Users, ThumbsUp } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { CHAT_MESSAGES, NEW_ATTENDEES, POLLS, MILESTONES } from '../components/webinar/constants';
@@ -179,31 +175,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white pb-16">
-      <div className="w-full p-4 text-center mb-6 bg-white">
-        <div className="max-w-5xl mx-auto relative">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#0f172a] tracking-tight mb-2">
-            How To Tap Into 
-            <div className="inline-flex items-center mx-2">
-              <div className="bg-red-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-2">
-                <span className="text-xl">▶</span>
-              </div>
-              <span>YouTube's $15.5 Billion</span>
-            </div>
-          </h1>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a] tracking-tight">
-            Payout Program <span className="text-blue-600">Using AI</span>
-          </h2>
-        </div>
-        
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 z-0">
-          <div className="absolute top-10 left-10 grid grid-cols-10 gap-4">
-            {Array(100).fill(0).map((_, i) => (
-              <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-6xl mx-auto p-4 space-y-6">
         <div className="grid md:grid-cols-3 gap-4">
           <div className="md:col-span-2 space-y-4">
@@ -267,8 +238,6 @@ const Index = () => {
                 }} />
               </div>
             )}
-            
-            <WebinarInfoTabs />
           </div>
 
           <div className="space-y-4">
@@ -293,8 +262,6 @@ const Index = () => {
                 totalVotes={pollResults.reduce((a, b) => a + b, 0)}
               />
             )}
-            
-            <WebinarUpcomingTopics currentTime={currentTime} />
           </div>
         </div>
       </div>
