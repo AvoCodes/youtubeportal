@@ -87,7 +87,7 @@ const Index = () => {
     
     toast({
       title: "Vote recorded!",
-      description: "Thank you for participating in our poll.",
+      description: "Thank you for being active.",
       duration: 3000,
     });
   };
@@ -111,7 +111,7 @@ const Index = () => {
             <div className="flex items-center gap-3 text-sm">
               <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full">
                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-medium">Live Webinar</span>
+                <span className="font-medium">Live Session</span>
               </div>
               <div className="flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full">
                 <Users className="w-4 h-4" />
@@ -125,7 +125,7 @@ const Index = () => {
           </div>
           
           <h1 className="text-xl md:text-2xl font-medium text-slate-900 mb-2">
-            The YouTube Portal: Making $57/Hr Without Showing Your Face.
+            The YouTube Portal: Make $57/Hr Without Showing Your Face.
           </h1>
           <p className="text-slate-600">With Daniel Bitton, Made First Million At 17.</p>
         </div>
@@ -183,7 +183,7 @@ const Index = () => {
                   <div className="inline-block bg-blue-500/20 text-white text-xs font-medium px-3 py-1 rounded-full border border-white/20">
                     Webinar Special
                   </div>
-                  <h3 className="text-white font-medium text-xl">Ready to start your AI YouTube journey?</h3>
+                  <h3 className="text-white font-medium text-xl">Ready to start your AI Shorts journey?</h3>
                   <div className="space-y-2 text-blue-100">
                     <p className="flex items-center gap-2">
                       <Users className="w-4 h-4 text-blue-300" />
@@ -200,7 +200,7 @@ const Index = () => {
                 </div>
                 <CTAButton onClick={() => {
                   toast({
-                    title: "🎉 Great choice!",
+                    title: "🎉 Congrats!",
                     description: "You're being redirected to the secure enrollment page...",
                     duration: 3000,
                   });
@@ -227,7 +227,7 @@ const Index = () => {
                   <ul className="space-y-3 text-left">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>Complete AI YouTube Automation System</span>
+                      <span>Complete AI YouTube Shorts Automation System</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
@@ -264,7 +264,7 @@ const Index = () => {
               )}
               {currentMilestone.type === 'final-offer' && (
                 <div className="space-y-4">
-                  <p>Don't miss out on this special webinar pricing!</p>
+                  <p>Don't miss out on this special offer!</p>
                   <div className="bg-amber-50 text-amber-700 p-4 rounded-lg">
                     <p className="font-medium">Offer ends in: {formatCountdown(countdown)}</p>
                   </div>
