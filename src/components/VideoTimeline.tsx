@@ -168,12 +168,12 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
       
       <div className="relative">
         {/* Mobile Timeline Navigation */}
-        <div className="relative">
+        <div className="relative pb-4">
           {/* Show left scroll button when needed */}
           {showLeftScroll && (
             <button 
               onClick={() => scrollTimeline('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-white/80 rounded-full shadow-md border border-slate-200 md:hidden"
+              className="absolute left-0 top-6 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-white/90 rounded-full shadow-md border border-slate-200 md:hidden"
               aria-label="Scroll left"
             >
               <ChevronLeft className="w-5 h-5 text-slate-600" />
@@ -184,7 +184,7 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
           {showRightScroll && (
             <button 
               onClick={() => scrollTimeline('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-white/80 rounded-full shadow-md border border-slate-200 md:hidden"
+              className="absolute right-0 top-6 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-white/90 rounded-full shadow-md border border-slate-200 md:hidden"
               aria-label="Scroll right"
             >
               <ChevronRight className="w-5 h-5 text-slate-600" />
@@ -192,23 +192,24 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
           )}
           
           {/* Timeline Track */}
-          <div className="absolute top-6 left-1 right-1 md:left-0 md:right-0 h-1 bg-slate-100 z-0"></div>
+          <div className="absolute top-6 left-5 right-5 md:left-0 md:right-0 h-1 bg-slate-100 z-0"></div>
           
           {/* Timeline Progress */}
           <div 
-            className="absolute top-6 left-1 md:left-0 h-1 bg-blue-500 z-0 transition-all duration-300"
+            className="absolute top-6 left-5 md:left-0 h-1 bg-blue-500 z-0 transition-all duration-300"
             style={{ width: `${calculateProgress()}%` }}
           ></div>
           
           {/* Timeline Sections - Scrollable on mobile */}
           <div 
             ref={timelineRef}
-            className="relative z-10 flex md:grid md:grid-cols-6 gap-4 md:gap-2 overflow-x-auto scrollbar-none py-1 px-1 md:px-0"
+            className="relative z-10 flex md:grid md:grid-cols-6 overflow-x-auto scrollbar-none py-1 px-3 md:px-0"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {sections.map((section) => (
               <div 
                 key={section.id}
-                className="flex flex-col items-center flex-shrink-0 w-16 md:w-auto"
+                className="flex flex-col items-center flex-shrink-0 w-24 md:w-auto mx-1 md:mx-0"
               >
                 <button 
                   onClick={() => setActiveSection(section)}
@@ -245,7 +246,7 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
       
       {/* Active Section Details */}
       {activeSection && (
-        <div className="mt-6 md:mt-8 p-4 bg-slate-50 rounded-lg border border-slate-200">
+        <div className="mt-4 md:mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
           <div className="flex gap-3 items-start">
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
               {activeSection.icon}
