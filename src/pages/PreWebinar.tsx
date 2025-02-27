@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Clock, Users, ArrowRight } from 'lucide-react';
+import { Clock, Users, ArrowRight, AlertTriangle } from 'lucide-react';
 import VideoPlayer from '../components/VideoPlayer';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
@@ -87,6 +87,12 @@ const PreWebinar = () => {
             <span>{capacityPercentage}%</span>
           </div>
           <Progress value={capacityPercentage} className="h-2.5" indicatorClassName="bg-rose-500" />
+          
+          {/* Urgency message */}
+          <div className="mt-4 text-center text-red-500 text-sm font-medium flex justify-center items-center gap-2">
+            <AlertTriangle className="w-4 h-4" />
+            <span>Registration closing soon due to high demand!</span>
+          </div>
         </div>
         
         {/* Video Player */}
