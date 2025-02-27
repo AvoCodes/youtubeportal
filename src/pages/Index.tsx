@@ -4,7 +4,7 @@ import VideoPlayer from '../components/VideoPlayer';
 import CTAButton from '../components/CTAButton';
 import WebinarPoll from '../components/webinar/WebinarPoll';
 import { useToast } from '@/components/ui/use-toast';
-import { Clock, ArrowUpRight, Users, CheckCircle, Trophy, ThumbsUp } from 'lucide-react';
+import { Clock, ArrowUpRight, Users, CheckCircle, Trophy, ThumbsUp, Radio } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -120,6 +120,22 @@ const Index = () => {
             The YouTube Portal: Make $57/Hr Without Showing Your Face.
           </h1>
           <p className="text-slate-600">With Daniel Bitton, Made First Million At 17.</p>
+        </div>
+
+        {/* Webinar Tags/Labels at top */}
+        <div className="flex flex-wrap gap-3 mb-6">
+          <div className="bg-rose-50 text-rose-600 px-3 py-1.5 rounded-full flex items-center text-sm font-medium border border-rose-100">
+            <Radio className="w-3.5 h-3.5 mr-1.5" />
+            Live Session
+          </div>
+          <div className="bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-full flex items-center text-sm font-medium border border-emerald-100">
+            <CheckCircle className="w-3.5 h-3.5 mr-1.5" />
+            Beginner Friendly
+          </div>
+          <div className="bg-amber-50 text-amber-600 px-3 py-1.5 rounded-full flex items-center text-sm font-medium border border-amber-100">
+            <Trophy className="w-3.5 h-3.5 mr-1.5" />
+            Proven Method
+          </div>
         </div>
 
         {/* Main Content Area */}
