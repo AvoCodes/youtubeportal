@@ -23,8 +23,8 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
   const [sections, setSections] = React.useState<Section[]>([
     { 
       id: 1, 
-      title: "Introduction", 
-      description: "Learn the fundamentals of AI YouTube automation",
+      title: "Intro", 
+      description: "The Temporary $15.5B YouTube Portal",
       timestamp: 30, 
       points: 5, 
       completed: false,
@@ -32,8 +32,8 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
     },
     { 
       id: 2, 
-      title: "Content Strategy", 
-      description: "Discover the best-performing niches and AI content types",
+      title: "The Opportunity", 
+      description: "Why Now?",
       timestamp: 180, 
       points: 15, 
       completed: false,
@@ -41,8 +41,8 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
     },
     { 
       id: 3, 
-      title: "Monetization", 
-      description: "Set up multiple revenue streams for your channel",
+      title: "Niche Selection", 
+      description: "How To Ride Viral Waves",
       timestamp: 400, 
       points: 25, 
       completed: false,
@@ -50,8 +50,8 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
     },
     { 
       id: 4, 
-      title: "Scaling Systems", 
-      description: "Build systems to manage multiple channels at once",
+      title: "AI Shorts", 
+      description: "Let Robots Do All Of The Heavy Lifting",
       timestamp: 720, 
       points: 35, 
       completed: false,
@@ -59,8 +59,8 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
     },
     { 
       id: 5, 
-      title: "Case Studies", 
-      description: "Real-world examples of successful AI channels",
+      title: "The Multiplier Effect", 
+      description: "Creating Viral Shorts At Scale",
       timestamp: 1020, 
       points: 40, 
       completed: false,
@@ -68,7 +68,7 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
     },
     { 
       id: 6, 
-      title: "Next Steps", 
+      title: "Limited Bonus", 
       description: "How to get started with your first channel",
       timestamp: 1500, 
       points: 50, 
