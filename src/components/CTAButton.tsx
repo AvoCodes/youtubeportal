@@ -18,7 +18,7 @@ const CTAButton: React.FC<CTAButtonProps> = ({ onClick, className }) => {
         className
       )}
     >
-      <span>Join the Program</span>
+      <span>Claim Offer</span>
       <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
     </Button>
   );

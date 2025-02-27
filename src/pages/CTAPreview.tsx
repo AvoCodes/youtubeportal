@@ -43,7 +43,7 @@ const CTAPreview = () => {
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2 text-sm text-white/80">
                 <p className="flex items-center gap-1.5">
                   <Users className="w-3.5 h-3.5" />
-                  <span>Only {seatsRemaining} spots left</span>
+                  <span>{seatsRemaining} VIP Spots Left</span>
                 </p>
                 <p className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5" />
@@ -109,7 +109,7 @@ const CTAPreview = () => {
               <div className="space-y-2 text-white">
                 <p className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-white/80" />
-                  <span>Limited to next {seatsRemaining} enrollments</span>
+                  <span>{seatsRemaining} VIP Spots Left</span>
                 </p>
                 <p className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-white/80" />
@@ -139,13 +139,13 @@ const CTAPreview = () => {
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-3">
             <div className="inline-block bg-blue-500/20 text-white text-xs font-medium px-3 py-1 rounded-full border border-white/20">
-              Webinar Special
+              Live Special
             </div>
             <h3 className="text-white font-medium text-xl">Ready to start your AI Shorts journey?</h3>
             <div className="space-y-2 text-blue-100">
               <p className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-blue-300" />
-                <span>Limited to next {seatsRemaining} enrollments</span>
+                <span>{seatsRemaining} VIP Spots Left</span>
               </p>
               <p className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-blue-300" />
