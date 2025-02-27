@@ -6,7 +6,7 @@ import CTAButton from '../components/CTAButton';
 import WebinarPoll from '../components/webinar/WebinarPoll';
 import LiveChat from '../components/LiveChat';
 import { useToast } from '@/components/ui/use-toast';
-import { Clock, ArrowUpRight, Users, CheckCircle, Trophy } from 'lucide-react';
+import { Clock, ArrowUpRight, Users, CheckCircle, Trophy, ThumbsUp } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -27,6 +27,7 @@ const Index = () => {
   const [countdownActive, setCountdownActive] = useState(false);
   const [countdown, setCountdown] = useState(600);
   const [visibleChatMessages, setVisibleChatMessages] = useState<any[]>([]);
+  const [likesCount, setLikesCount] = useState(2134);
   
   const { toast } = useToast();
 
@@ -110,28 +111,20 @@ const Index = () => {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
+  const handleLike = () => {
+    setLikesCount(prev => prev + 1);
+    toast({
+      title: "Thanks for the like!",
+      description: "Your engagement helps the community.",
+      duration: 3000,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] pb-16">
       <div className="max-w-[1600px] mx-auto p-4 pt-8 md:pt-12">
         {/* Webinar Header */}
         <div className="mb-8">
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-            <div className="flex items-center gap-3 text-sm">
-              <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-medium">Live Session</span>
-              </div>
-              <div className="flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full">
-                <Users className="w-4 h-4" />
-                <span className="font-medium">{viewerCount.toLocaleString()} watching</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 bg-amber-50 text-amber-700 px-3 py-1.5 rounded-full">
-              <Trophy className="w-4 h-4" />
-              <span className="font-medium">Beginner Friendly</span>
-            </div>
-          </div>
-          
           <h1 className="text-xl md:text-2xl font-medium text-slate-900 mb-2">
             The YouTube Portal: Make $57/Hr Without Showing Your Face.
           </h1>
@@ -188,13 +181,22 @@ const Index = () => {
                 </div>
               </div>
               
-              {/* Clean bottom bar with subtle accent */}
-              <div className="bg-white py-3 px-4 border-t border-slate-100 flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                  <span className="text-sm text-slate-600">Now Playing</span>
+              {/* Clean bottom bar with viewer and like counts */}
+              <div className="bg-white py-3 px-4 border-t border-slate-100 flex items-center">
+                <div className="flex items-center gap-6 text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <Users className="w-4 h-4 text-blue-600" />
+                    <span className="font-medium">{viewerCount.toLocaleString()} watching now</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ThumbsUp 
+                      className="w-4 h-4 text-blue-600 cursor-pointer" 
+                      onClick={handleLike}
+                    />
+                    <span className="font-medium">{likesCount.toLocaleString()}</span>
+                  </div>
                 </div>
-                <div className="text-sm text-slate-500">
+                <div className="ml-auto text-sm text-slate-500">
                   {Math.floor(currentTime / 60)}:{Math.floor(currentTime % 60).toString().padStart(2, '0')} / 30:00
                 </div>
               </div>
@@ -260,14 +262,8 @@ const Index = () => {
               messages={visibleChatMessages}
               currentTime={currentTime}
               viewerCount={viewerCount}
-              likesCount={2134}
-              onLike={() => {
-                toast({
-                  title: "Thanks for the like!",
-                  description: "Your engagement helps the community.",
-                  duration: 3000,
-                });
-              }}
+              likesCount={likesCount}
+              onLike={handleLike}
             />
           </div>
         </div>
