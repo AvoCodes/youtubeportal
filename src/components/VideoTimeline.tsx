@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Check, BookOpen, Lightbulb, DollarSign, Star, Award, Rocket, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Check, BookOpen, Lightbulb, DollarSign, Star, Award, Rocket } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { Progress } from '@/components/ui/progress';
 
 interface Section {
   id: number;
@@ -79,18 +80,17 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
   
   const [totalPoints, setTotalPoints] = React.useState(0);
   const [activeSection, setActiveSection] = React.useState<Section | null>(null);
-  const [visibleSections, setVisibleSections] = React.useState<number[]>([1, 2, 3, 4, 5, 6]);
-  const timelineRef = React.useRef<HTMLDivElement>(null);
   
-  // For mobile scrolling
-  const [showLeftScroll, setShowLeftScroll] = React.useState(false);
-  const [showRightScroll, setShowRightScroll] = React.useState(false);
-  
-  const calculateProgress = () => {
-    const completedSections = sections.filter(section => section.completed).length;
-    return (completedSections / sections.length) * 100;
+  // Format timestamp to MM:SS
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
+  // Calculate the progress percentage
+  const progressPercentage = (currentTime / duration) * 100;
+  
   React.useEffect(() => {
     sections.forEach(section => {
       if (!section.completed && currentTime >= section.timestamp) {
@@ -117,48 +117,22 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
     }
   }, [currentTime, sections, toast, activeSection]);
 
-  // Check if scrolling is needed
-  React.useEffect(() => {
-    const checkScrollButtons = () => {
-      if (timelineRef.current) {
-        const { scrollWidth, clientWidth, scrollLeft } = timelineRef.current;
-        setShowLeftScroll(scrollLeft > 0);
-        setShowRightScroll(scrollLeft < scrollWidth - clientWidth - 5); // 5px buffer
-      }
-    };
-
-    // Initial check
-    checkScrollButtons();
-
-    // Add scroll event listener
-    const timelineElement = timelineRef.current;
-    if (timelineElement) {
-      timelineElement.addEventListener('scroll', checkScrollButtons);
-      
-      // Cleanup
-      return () => {
-        timelineElement.removeEventListener('scroll', checkScrollButtons);
-      };
+  // Calculate time markers (divide duration into equal parts)
+  const timeMarkers = React.useMemo(() => {
+    const markers = [0];
+    const increment = Math.floor(duration / 4);
+    
+    for (let i = 1; i < 4; i++) {
+      markers.push(i * increment);
     }
-  }, []);
-
-  const scrollTimeline = (direction: 'left' | 'right') => {
-    if (timelineRef.current) {
-      const scrollAmount = 150; // Adjust scroll amount as needed
-      const newScrollLeft = direction === 'left' 
-        ? timelineRef.current.scrollLeft - scrollAmount 
-        : timelineRef.current.scrollLeft + scrollAmount;
-      
-      timelineRef.current.scrollTo({
-        left: newScrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
+    
+    markers.push(duration);
+    return markers;
+  }, [duration]);
 
   return (
-    <div className="p-4 bg-white rounded-xl">
-      <div className="flex justify-between items-center mb-3">
+    <div className="p-5 bg-white rounded-xl shadow-sm border border-slate-100">
+      <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-medium text-slate-800">Roadmap</h3>
         <div className="flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full">
           <Award className="w-4 h-4" />
@@ -166,87 +140,26 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
         </div>
       </div>
       
-      <div className="relative">
-        {/* Mobile Timeline Navigation */}
-        <div className="relative pb-4">
-          {/* Show left scroll button when needed */}
-          {showLeftScroll && (
-            <button 
-              onClick={() => scrollTimeline('left')}
-              className="absolute left-0 top-6 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-white/90 rounded-full shadow-md border border-slate-200 md:hidden"
-              aria-label="Scroll left"
-            >
-              <ChevronLeft className="w-5 h-5 text-slate-600" />
-            </button>
-          )}
-          
-          {/* Show right scroll button when needed */}
-          {showRightScroll && (
-            <button 
-              onClick={() => scrollTimeline('right')}
-              className="absolute right-0 top-6 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-white/90 rounded-full shadow-md border border-slate-200 md:hidden"
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="w-5 h-5 text-slate-600" />
-            </button>
-          )}
-          
-          {/* Timeline Track */}
-          <div className="absolute top-6 left-5 right-5 md:left-0 md:right-0 h-1 bg-slate-100 z-0"></div>
-          
-          {/* Timeline Progress */}
-          <div 
-            className="absolute top-6 left-5 md:left-0 h-1 bg-blue-500 z-0 transition-all duration-300"
-            style={{ width: `${calculateProgress()}%` }}
-          ></div>
-          
-          {/* Timeline Sections - Scrollable on mobile */}
-          <div 
-            ref={timelineRef}
-            className="relative z-10 flex md:grid md:grid-cols-6 overflow-x-auto scrollbar-none py-1 px-3 md:px-0"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {sections.map((section) => (
-              <div 
-                key={section.id}
-                className="flex flex-col items-center flex-shrink-0 w-24 md:w-auto mx-1 md:mx-0"
-              >
-                <button 
-                  onClick={() => setActiveSection(section)}
-                  className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
-                    activeSection?.id === section.id 
-                      ? 'bg-blue-100 ring-2 ring-blue-500 ring-offset-2' 
-                      : section.completed 
-                        ? 'bg-blue-50' 
-                        : 'bg-slate-50'
-                  }`}
-                >
-                  {section.completed ? (
-                    section.icon
-                  ) : (
-                    <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${
-                      activeSection?.id === section.id ? 'bg-blue-500' : 'bg-slate-300'
-                    }`}></div>
-                  )}
-                </button>
-                <span className={`text-xs mt-2 font-medium text-center transition-colors ${
-                  activeSection?.id === section.id 
-                    ? 'text-blue-700' 
-                    : section.completed 
-                      ? 'text-slate-700' 
-                      : 'text-slate-500'
-                }`}>
-                  {section.title}
-                </span>
-              </div>
-            ))}
-          </div>
+      <div className="relative pb-2">
+        {/* Progress Bar */}
+        <Progress 
+          value={progressPercentage} 
+          className="h-2.5 bg-slate-200" 
+          indicatorClassName="bg-blue-500"
+          showThumb={true}
+        />
+        
+        {/* Time Markers */}
+        <div className="flex justify-between mt-2 text-sm text-slate-500">
+          {timeMarkers.map((time, index) => (
+            <div key={index}>{formatTime(time)}</div>
+          ))}
         </div>
       </div>
       
       {/* Active Section Details */}
       {activeSection && (
-        <div className="mt-4 md:mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+        <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
           <div className="flex gap-3 items-start">
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
               {activeSection.icon}
