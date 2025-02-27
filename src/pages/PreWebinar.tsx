@@ -47,7 +47,7 @@ const PreWebinar = () => {
   const remainingSeats = Math.floor((100 - capacityPercentage) / 100 * 500);
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white flex flex-col items-center">
       <div className="max-w-5xl w-full px-4 py-12 md:py-16">
         {/* Webinar Information */}
         <div className="text-center mb-8">
@@ -57,7 +57,7 @@ const PreWebinar = () => {
           <p className="text-lg md:text-xl text-slate-600 mb-2">
             Your seat is reserved! The live training starts soon.
           </p>
-          <div className="inline-block bg-blue-600 text-white px-4 py-1.5 rounded-full font-medium text-sm">
+          <div className="inline-block bg-purple-600 text-white px-4 py-1.5 rounded-full font-medium text-sm">
             With Daniel Bitton, Made First Million At 17.
           </div>
         </div>
@@ -65,7 +65,7 @@ const PreWebinar = () => {
         {/* Timer & Capacity */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10 mb-6">
           <div className="flex items-center gap-2 bg-white p-3 rounded-lg shadow-sm">
-            <Clock className="w-5 h-5 text-blue-500" />
+            <Clock className="w-5 h-5 text-purple-500" />
             <div className="font-mono text-2xl font-medium text-slate-900">
               {formatTime(timeRemaining)}
             </div>
@@ -98,7 +98,7 @@ const PreWebinar = () => {
         <div className="text-center">
           <Button 
             onClick={handleJoinWebinar}
-            className="text-lg px-8 py-6 h-auto bg-blue-600 hover:bg-blue-700 text-white rounded-lg gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="text-lg px-8 py-6 h-auto bg-purple-600 hover:bg-purple-700 text-white rounded-lg gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
             Join the Webinar Now
             <ArrowRight className="w-5 h-5" />
