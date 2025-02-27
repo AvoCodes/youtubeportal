@@ -55,7 +55,7 @@ const PreWebinar = () => {
             The YouTube Portal: Make $57/Hr Without Showing Your Face.
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-2">
-            Your seat is reserved! The live training starts soon.
+            Reserve your seat! The live training starts soon.
           </p>
           <div className="inline-block bg-rose-500/90 backdrop-blur-sm text-white px-4 py-1.5 rounded-full font-medium text-sm shadow-sm">
             With Daniel Bitton, Made First Million At 17.
@@ -100,12 +100,12 @@ const PreWebinar = () => {
             onClick={handleJoinWebinar}
             className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white rounded-lg gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
           >
-            Join the Webinar Now
+            Join Live Session Now
             <ArrowRight className="w-5 h-5" />
           </Button>
           
           <p className="mt-3 text-slate-500 text-sm">
-            This training is about to begin. Click to join now.
+            This session is about to begin. Click to join now.
           </p>
         </div>
       </div>
