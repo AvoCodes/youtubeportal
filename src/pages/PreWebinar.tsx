@@ -91,7 +91,7 @@ const PreWebinar = () => {
           {/* Urgency message */}
           <div className="mt-4 text-center text-red-500 text-sm font-medium flex justify-center items-center gap-2">
             <AlertTriangle className="w-4 h-4" />
-            <span>Registration closing soon due to high demand!</span>
+            <span>Session closing soon due to high demand!</span>
           </div>
         </div>
         
