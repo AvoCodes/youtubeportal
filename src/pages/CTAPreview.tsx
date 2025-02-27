@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Clock, Users, ArrowUpRight } from 'lucide-react';
+import { Clock, Users, ArrowUpRight, CheckCircle } from 'lucide-react';
 import CTAButton from '../components/CTAButton';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
@@ -161,6 +161,92 @@ const CTAPreview = () => {
               duration: 3000,
             });
           }} />
+        </div>
+      </div>
+    );
+  };
+
+  const renderOffersSection = () => {
+    return (
+      <div className="space-y-6">
+        <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+          <h3 className="text-lg font-medium text-slate-900 mb-3">Offer Highlights</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-medium text-slate-800">Complete AI YouTube Shorts Automation System</h4>
+                <p className="text-sm text-slate-600">Everything you need to generate passive income with AI-created shorts</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-medium text-slate-800">Premium Content Library</h4>
+                <p className="text-sm text-slate-600">Over 100+ ready-to-use templates and niche research reports</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-medium text-slate-800">Private Community Access</h4>
+                <p className="text-sm text-slate-600">Connect with other successful creators for support and networking</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="font-medium text-slate-800">Weekly Live Q&A Sessions</h4>
+                <p className="text-sm text-slate-600">Get your questions answered by our expert team</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+            <div className="text-amber-500 bg-amber-50 rounded-full w-8 h-8 flex items-center justify-center mb-3">
+              <CheckCircle className="w-4 h-4" />
+            </div>
+            <h3 className="font-medium text-slate-900 mb-1">AI Script Generator</h3>
+            <p className="text-sm text-slate-600">Create viral-worthy scripts with our advanced AI tools</p>
+          </div>
+          
+          <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+            <div className="text-blue-500 bg-blue-50 rounded-full w-8 h-8 flex items-center justify-center mb-3">
+              <CheckCircle className="w-4 h-4" />
+            </div>
+            <h3 className="font-medium text-slate-900 mb-1">90-Day Fast Start</h3>
+            <p className="text-sm text-slate-600">Step-by-step guidance to make your first $1000</p>
+          </div>
+          
+          <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+            <div className="text-purple-500 bg-purple-50 rounded-full w-8 h-8 flex items-center justify-center mb-3">
+              <CheckCircle className="w-4 h-4" />
+            </div>
+            <h3 className="font-medium text-slate-900 mb-1">Monetization Blueprint</h3>
+            <p className="text-sm text-slate-600">Multiple income streams from your AI shorts channel</p>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+              <h3 className="text-lg font-medium text-slate-900">Ready to transform your online income?</h3>
+              <p className="text-slate-600">Join thousands of successful AI content creators today.</p>
+            </div>
+            <CTAButton onClick={() => {
+              toast({
+                title: "🎉 Congrats!",
+                description: "You're being redirected to the secure enrollment page...",
+                duration: 3000,
+              });
+            }} />
+          </div>
         </div>
       </div>
     );
@@ -337,12 +423,22 @@ const CTAPreview = () => {
             </div>
           </div>
           
+          {/* Offer Components Preview */}
+          <div className="space-y-2">
+            <h2 className="text-lg font-medium text-slate-800">Offer Components</h2>
+            <p className="text-sm text-slate-600">These components can be used below the main CTA section to highlight offer details</p>
+            <div className="border border-slate-200 rounded-lg p-8 bg-white">
+              {renderOffersSection()}
+            </div>
+          </div>
+          
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
             <h3 className="text-amber-800 font-medium mb-1">Implementation Notes:</h3>
             <ul className="text-amber-700 text-sm space-y-1 ml-4 list-disc">
               <li>Once you've decided on a design, you can update the CTA section in the main webinar page.</li>
               <li>The current design uses the "default" variant with the "blue" theme.</li>
               <li>To modify the button style, edit the CTAButton component separately.</li>
+              <li>The offer components can be mixed and matched below the main CTA section.</li>
             </ul>
           </div>
         </div>
