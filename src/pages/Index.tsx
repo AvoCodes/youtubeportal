@@ -142,27 +142,30 @@ const Index = () => {
         <div className="grid gap-6 md:grid-cols-4">
           {/* Video Section - takes up 3/4 of the space */}
           <div className="md:col-span-3 space-y-6">
-            <div className="relative rounded-xl overflow-hidden bg-black shadow-lg">
-              <VideoPlayer
-                wistiaId="92627nrxy4"
-                onTimeUpdate={handleTimeUpdate}
-              />
-              
-              {/* Progress Bar */}
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-900/50">
-                <Progress 
-                  value={(currentTime / 1800) * 100} 
-                  className="h-full" 
-                  indicatorClassName="bg-blue-500"
+            <div className="relative p-[3px] rounded-xl overflow-hidden bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 animate-pulse opacity-70"></div>
+              <div className="relative bg-black rounded-lg overflow-hidden z-10">
+                <VideoPlayer
+                  wistiaId="92627nrxy4"
+                  onTimeUpdate={handleTimeUpdate}
                 />
-              </div>
-              
-              {showNotification && (
-                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 text-black shadow-lg border border-gray-200 max-w-xs animate-in fade-in slide-in-from-top duration-300">
-                  <h4 className="font-semibold text-sm">{notification.title}</h4>
-                  <p className="text-xs text-gray-700">{notification.message}</p>
+                
+                {/* Progress Bar */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-900/50">
+                  <Progress 
+                    value={(currentTime / 1800) * 100} 
+                    className="h-full" 
+                    indicatorClassName="bg-blue-500"
+                  />
                 </div>
-              )}
+                
+                {showNotification && (
+                  <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg p-3 text-black shadow-lg border border-gray-200 max-w-xs animate-in fade-in slide-in-from-top duration-300">
+                    <h4 className="font-semibold text-sm">{notification.title}</h4>
+                    <p className="text-xs text-gray-700">{notification.message}</p>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Webinar Timeline */}
