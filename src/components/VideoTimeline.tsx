@@ -1,15 +1,16 @@
 
 import React from 'react';
-import { Check, Trophy } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
+import { Check, BookOpen, Lightbulb, DollarSign, Star, Award, Rocket } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
 interface Section {
   id: number;
   title: string;
+  description: string;
   timestamp: number;
   points: number;
   completed: boolean;
+  icon: React.ReactNode;
 }
 
 interface VideoTimelineProps {
@@ -20,20 +21,69 @@ interface VideoTimelineProps {
 const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) => {
   const { toast } = useToast();
   const [sections, setSections] = React.useState<Section[]>([
-    { id: 1, title: "Introduction", timestamp: 30, points: 5, completed: false },
-    { id: 2, title: "AI YouTube Basics", timestamp: 120, points: 10, completed: false },
-    { id: 3, title: "Content Strategy", timestamp: 240, points: 15, completed: false },
-    { id: 4, title: "Audience Building", timestamp: 360, points: 20, completed: false },
-    { id: 5, title: "Revenue Streams", timestamp: 480, points: 25, completed: false },
-    { id: 6, title: "Monetization Tips", timestamp: 600, points: 30, completed: false },
-    { id: 7, title: "Growth Hacks", timestamp: 720, points: 35, completed: false },
-    { id: 8, title: "Scaling Methods", timestamp: 900, points: 40, completed: false },
-    { id: 9, title: "Advanced Strategies", timestamp: 1200, points: 45, completed: false },
-    { id: 10, title: "Final Tips", timestamp: 1500, points: 50, completed: false },
+    { 
+      id: 1, 
+      title: "Introduction", 
+      description: "Learn the fundamentals of AI YouTube automation",
+      timestamp: 30, 
+      points: 5, 
+      completed: false,
+      icon: <BookOpen className="w-5 h-5 text-blue-500" />
+    },
+    { 
+      id: 2, 
+      title: "Content Strategy", 
+      description: "Discover the best-performing niches and AI content types",
+      timestamp: 180, 
+      points: 15, 
+      completed: false,
+      icon: <Lightbulb className="w-5 h-5 text-amber-500" />
+    },
+    { 
+      id: 3, 
+      title: "Monetization", 
+      description: "Set up multiple revenue streams for your channel",
+      timestamp: 400, 
+      points: 25, 
+      completed: false,
+      icon: <DollarSign className="w-5 h-5 text-green-500" />
+    },
+    { 
+      id: 4, 
+      title: "Scaling Systems", 
+      description: "Build systems to manage multiple channels at once",
+      timestamp: 720, 
+      points: 35, 
+      completed: false,
+      icon: <Rocket className="w-5 h-5 text-purple-500" />
+    },
+    { 
+      id: 5, 
+      title: "Case Studies", 
+      description: "Real-world examples of successful AI channels",
+      timestamp: 1020, 
+      points: 40, 
+      completed: false,
+      icon: <Star className="w-5 h-5 text-yellow-500" />
+    },
+    { 
+      id: 6, 
+      title: "Next Steps", 
+      description: "How to get started with your first channel",
+      timestamp: 1500, 
+      points: 50, 
+      completed: false,
+      icon: <Award className="w-5 h-5 text-red-500" />
+    },
   ]);
   
   const [totalPoints, setTotalPoints] = React.useState(0);
-  const progress = (currentTime / duration) * 100;
+  const [activeSection, setActiveSection] = React.useState<Section | null>(null);
+  
+  const calculateProgress = () => {
+    const completedSections = sections.filter(section => section.completed).length;
+    return (completedSections / sections.length) * 100;
+  };
 
   React.useEffect(() => {
     sections.forEach(section => {
@@ -44,49 +94,108 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ currentTime, duration }) 
         setTotalPoints(prev => prev + section.points);
         
         toast({
-          title: `✨ Achievement Unlocked: ${section.title}`,
-          description: `+${section.points} points earned! Keep learning!`,
+          title: `✨ Section Completed: ${section.title}`,
+          description: `+${section.points} points earned! Keep watching to unlock more content.`,
           duration: 3000,
         });
       }
     });
-  }, [currentTime, sections, toast]);
+    
+    // Set active section
+    const currentSection = [...sections]
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .find(section => currentTime >= section.timestamp);
+      
+    if (currentSection && (!activeSection || activeSection.id !== currentSection.id)) {
+      setActiveSection(currentSection);
+    }
+  }, [currentTime, sections, toast, activeSection]);
 
   return (
-    <div className="relative py-6 px-4 bg-gradient-to-r from-slate-50 to-slate-100">
-      <div className="absolute right-4 top-2 flex items-center gap-2 bg-gradient-to-r from-indigo-50 to-blue-50 text-blue-600 rounded-full px-3 py-1.5 border border-blue-100">
-        <Trophy className="w-4 h-4" />
-        <span className="font-medium">{totalPoints} points</span>
+    <div className="p-4 bg-white">
+      <div className="flex justify-between items-center mb-3">
+        <h3 className="text-lg font-medium text-slate-800">Webinar Content Roadmap</h3>
+        <div className="flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full">
+          <Award className="w-4 h-4" />
+          <span className="font-medium">{totalPoints} points earned</span>
+        </div>
       </div>
       
-      <Progress 
-        value={progress} 
-        className="h-1.5 mb-6 bg-slate-100" 
-        indicatorClassName="bg-gradient-to-r from-blue-400 to-indigo-400"
-      />
-      
-      <div className="grid grid-cols-10 gap-2">
-        {sections.map((section) => (
-          <div 
-            key={section.id}
-            className={`relative flex flex-col items-center group ${
-              section.completed ? 'text-blue-600' : 'text-slate-400'
-            }`}
-          >
-            <div className={`w-3 h-3 rounded-full flex items-center justify-center mb-2 transition-all duration-300 ${
-              section.completed 
-                ? 'bg-gradient-to-r from-blue-400 to-indigo-400 scale-110' 
-                : 'bg-slate-200'
-            }`}>
-              {section.completed && <Check className="w-2 h-2 text-white" />}
+      <div className="relative">
+        {/* Timeline Track */}
+        <div className="absolute top-6 left-0 right-0 h-1 bg-slate-100 z-0"></div>
+        
+        {/* Timeline Progress */}
+        <div 
+          className="absolute top-6 left-0 h-1 bg-blue-500 z-0 transition-all duration-300"
+          style={{ width: `${calculateProgress()}%` }}
+        ></div>
+        
+        {/* Timeline Sections */}
+        <div className="relative z-10 grid grid-cols-6 gap-2">
+          {sections.map((section) => (
+            <div 
+              key={section.id}
+              className="flex flex-col items-center"
+            >
+              <button 
+                onClick={() => setActiveSection(section)}
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+                  activeSection?.id === section.id 
+                    ? 'bg-blue-100 ring-2 ring-blue-500 ring-offset-2' 
+                    : section.completed 
+                      ? 'bg-blue-50' 
+                      : 'bg-slate-50'
+                }`}
+              >
+                {section.completed ? (
+                  section.icon
+                ) : (
+                  <div className={`w-4 h-4 rounded-full ${
+                    activeSection?.id === section.id ? 'bg-blue-500' : 'bg-slate-300'
+                  }`}></div>
+                )}
+              </button>
+              <span className={`text-xs mt-2 font-medium text-center transition-colors ${
+                activeSection?.id === section.id 
+                  ? 'text-blue-700' 
+                  : section.completed 
+                    ? 'text-slate-700' 
+                    : 'text-slate-500'
+              }`}>
+                {section.title}
+              </span>
             </div>
-            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-10">
-              {section.title}
-              {section.completed && <span className="ml-1 text-emerald-400">+{section.points}</span>}
+          ))}
+        </div>
+      </div>
+      
+      {/* Active Section Details */}
+      {activeSection && (
+        <div className="mt-8 p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <div className="flex gap-3 items-start">
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+              {activeSection.icon}
+            </div>
+            <div>
+              <h4 className="text-lg font-medium text-slate-800">{activeSection.title}</h4>
+              <p className="text-slate-600 mt-1">{activeSection.description}</p>
+              
+              {activeSection.completed ? (
+                <div className="flex items-center gap-2 mt-2 text-sm text-green-600">
+                  <Check className="w-4 h-4" />
+                  <span>Completed</span>
+                  <span className="text-xs bg-green-100 px-2 py-0.5 rounded-full">+{activeSection.points} pts</span>
+                </div>
+              ) : (
+                <div className="text-sm text-slate-500 mt-2">
+                  In progress... +{activeSection.points} points upon completion
+                </div>
+              )}
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
