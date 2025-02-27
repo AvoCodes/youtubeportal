@@ -224,34 +224,105 @@ const Index = () => {
 
           {/* Special Offer Section */}
           {currentTime >= 1020 && (
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-6">
-              <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="space-y-3">
-                  <div className="inline-block bg-blue-500/20 text-white text-xs font-medium px-3 py-1 rounded-full border border-white/20">
-                    Webinar Special
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl p-5 sm:p-6 border border-slate-200 shadow-sm">
+                <h3 className="text-lg font-medium text-slate-900 mb-3">Offer Highlights</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-medium text-slate-800">Complete AI YouTube Shorts Automation System</h4>
+                      <p className="text-sm text-slate-600">Everything you need to generate passive income with AI-created shorts</p>
+                    </div>
                   </div>
-                  <h3 className="text-white font-medium text-xl">Ready to start your AI Shorts journey?</h3>
-                  <div className="space-y-2 text-blue-100">
-                    <p className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-blue-300" />
-                      <span>Limited to next {seatsRemaining} enrollments</span>
-                    </p>
-                    {countdownActive && (
-                      <p className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-blue-300" />
-                        <span className="font-mono">{formatCountdown(countdown)}</span>
-                        <span>remaining</span>
-                      </p>
-                    )}
+                  
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-medium text-slate-800">Premium Content Library</h4>
+                      <p className="text-sm text-slate-600">Over 100+ ready-to-use templates and niche research reports</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-medium text-slate-800">Private Community Access</h4>
+                      <p className="text-sm text-slate-600">Connect with other successful creators for support and networking</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" />
+                    <div>
+                      <h4 className="font-medium text-slate-800">Weekly Live Q&A Sessions</h4>
+                      <p className="text-sm text-slate-600">Get your questions answered by our expert team</p>
+                    </div>
                   </div>
                 </div>
-                <CTAButton onClick={() => {
-                  toast({
-                    title: "🎉 Congrats!",
-                    description: "You're being redirected to the secure enrollment page...",
-                    duration: 3000,
-                  });
-                }} />
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+                  <div className="text-amber-500 bg-amber-50 rounded-full w-8 h-8 flex items-center justify-center mb-3">
+                    <CheckCircle className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-medium text-slate-900 mb-1">AI Script Generator</h3>
+                  <p className="text-sm text-slate-600">Create viral-worthy scripts with our advanced AI tools</p>
+                </div>
+                
+                <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+                  <div className="text-blue-500 bg-blue-50 rounded-full w-8 h-8 flex items-center justify-center mb-3">
+                    <CheckCircle className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-medium text-slate-900 mb-1">90-Day Fast Start</h3>
+                  <p className="text-sm text-slate-600">Step-by-step guidance to make your first $1000</p>
+                </div>
+                
+                <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+                  <div className="text-purple-500 bg-purple-50 rounded-full w-8 h-8 flex items-center justify-center mb-3">
+                    <CheckCircle className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-medium text-slate-900 mb-1">Monetization Blueprint</h3>
+                  <p className="text-sm text-slate-600">Multiple income streams from your AI shorts channel</p>
+                </div>
+              </div>
+              
+              <div className="bg-white/80 backdrop-blur-md rounded-xl p-5 sm:p-6 border border-slate-200/60 shadow-sm">
+                <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+                  <div className="space-y-2 sm:space-y-3 text-center sm:text-left">
+                    <div className="inline-block bg-slate-100 text-slate-800 text-xs font-medium px-3 py-1 rounded-full border border-slate-200/60">
+                      Live Special
+                    </div>
+                    <h3 className="text-slate-900 font-medium text-lg sm:text-xl">Ready to start your AI Shorts journey?</h3>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-slate-600 text-sm justify-center sm:justify-start">
+                      <p className="flex items-center gap-2 justify-center sm:justify-start">
+                        <Users className="w-4 h-4 text-slate-500" />
+                        <span>{seatsRemaining} VIP Spots Left</span>
+                      </p>
+                      {countdownActive && (
+                        <p className="flex items-center gap-2 justify-center sm:justify-start">
+                          <Clock className="w-4 h-4 text-slate-500" />
+                          <span className="font-mono">{formatCountdown(countdown)}</span>
+                          <span>remaining</span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="w-full sm:w-auto">
+                    <CTAButton 
+                      onClick={() => {
+                        toast({
+                          title: "🎉 Congrats!",
+                          description: "You're being redirected to the secure enrollment page...",
+                          duration: 3000,
+                        });
+                      }} 
+                      className="w-full sm:w-auto"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           )}
