@@ -44,7 +44,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ wistiaId, onTimeUpdate }) => 
   }, [wistiaId, onTimeUpdate]);
 
   return (
-    <div className="relative w-full aspect-video rounded-lg overflow-hidden shadow-lg">
+    <div className="w-full aspect-video">
       <div className={`wistia_responsive_padding`} style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
         <div className={`wistia_responsive_wrapper`} style={{ height: '100%', left: 0, position: 'absolute', top: 0, width: '100%' }}>
           <div className={`wistia_embed wistia_async_${wistiaId} videoFoam=true`} style={{ height: '100%', position: 'relative', width: '100%' }}>

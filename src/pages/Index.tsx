@@ -142,36 +142,36 @@ const Index = () => {
         <div className="grid gap-6 md:grid-cols-4">
           {/* Video Section - takes up 3/4 of the space */}
           <div className="md:col-span-3 space-y-6">
-            <div className="rounded-2xl overflow-hidden shadow-xl bg-white">
-              {/* Professional border with subtle accents */}
-              <div className="relative border-8 border-white rounded-2xl overflow-hidden">
-                {/* Light dot pattern for background styling - inspired by the image */}
+            <div className="rounded-xl overflow-hidden shadow-lg bg-white">
+              {/* Professional clean container */}
+              <div className="relative overflow-hidden">
+                {/* Light dot pattern for background styling */}
                 <div className="absolute inset-0 pointer-events-none opacity-5 z-0">
-                  <div className="absolute top-0 left-0 w-32 h-32">
-                    <div className="grid grid-cols-6 gap-2">
-                      {Array(36).fill(0).map((_, i) => (
+                  <div className="absolute top-2 left-2 w-40 h-40">
+                    <div className="grid grid-cols-8 gap-2">
+                      {Array(64).fill(0).map((_, i) => (
                         <div key={i} className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
                       ))}
                     </div>
                   </div>
-                  <div className="absolute bottom-0 right-0 w-32 h-32">
-                    <div className="grid grid-cols-6 gap-2">
-                      {Array(36).fill(0).map((_, i) => (
+                  <div className="absolute bottom-2 right-2 w-40 h-40">
+                    <div className="grid grid-cols-8 gap-2">
+                      {Array(64).fill(0).map((_, i) => (
                         <div key={i} className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
                       ))}
                     </div>
                   </div>
                 </div>
                 
-                {/* Actual video player with clean styling */}
-                <div className="relative bg-black z-10">
+                {/* Clean video player styling */}
+                <div className="relative z-10">
                   <VideoPlayer
                     wistiaId="92627nrxy4"
                     onTimeUpdate={handleTimeUpdate}
                   />
                   
                   {/* Progress Bar */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gray-900/30">
+                  <div className="absolute bottom-0 left-0 right-0 h-1.5">
                     <Progress 
                       value={(currentTime / 1800) * 100} 
                       className="h-full" 
