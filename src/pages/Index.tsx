@@ -192,7 +192,7 @@ const Index = () => {
               <div className="bg-white py-3 px-4 border-t border-slate-100 flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                  <span className="text-sm text-slate-600">Live Webinar</span>
+                  <span className="text-sm text-slate-600">Now Playing</span>
                 </div>
                 <div className="text-sm text-slate-500">
                   {Math.floor(currentTime / 60)}:{Math.floor(currentTime % 60).toString().padStart(2, '0')} / 30:00
