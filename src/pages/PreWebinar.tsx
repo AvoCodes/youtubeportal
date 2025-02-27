@@ -47,7 +47,7 @@ const PreWebinar = () => {
   const remainingSeats = Math.floor((100 - capacityPercentage) / 100 * 500);
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-b from-rose-50/80 to-white flex flex-col items-center">
       <div className="max-w-5xl w-full px-4 py-12 md:py-16">
         {/* Webinar Information */}
         <div className="text-center mb-8">
@@ -57,22 +57,22 @@ const PreWebinar = () => {
           <p className="text-lg md:text-xl text-slate-600 mb-2">
             Your seat is reserved! The live training starts soon.
           </p>
-          <div className="inline-block bg-purple-600 text-white px-4 py-1.5 rounded-full font-medium text-sm">
+          <div className="inline-block bg-rose-500/90 backdrop-blur-sm text-white px-4 py-1.5 rounded-full font-medium text-sm shadow-sm">
             With Daniel Bitton, Made First Million At 17.
           </div>
         </div>
         
         {/* Timer & Capacity */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10 mb-6">
-          <div className="flex items-center gap-2 bg-white p-3 rounded-lg shadow-sm">
-            <Clock className="w-5 h-5 text-purple-500" />
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm p-3 rounded-lg shadow-sm border border-rose-100">
+            <Clock className="w-5 h-5 text-rose-500" />
             <div className="font-mono text-2xl font-medium text-slate-900">
               {formatTime(timeRemaining)}
             </div>
             <span className="text-slate-500">until start</span>
           </div>
           
-          <div className="flex items-center gap-2 bg-white p-3 rounded-lg shadow-sm">
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm p-3 rounded-lg shadow-sm border border-rose-100">
             <Users className="w-5 h-5 text-amber-500" />
             <span className="text-slate-500">Only</span>
             <div className="font-medium text-amber-600">{remainingSeats} seats</div>
@@ -81,16 +81,16 @@ const PreWebinar = () => {
         </div>
         
         {/* Capacity Bar */}
-        <div className="w-full max-w-lg mx-auto mb-8">
+        <div className="w-full max-w-lg mx-auto mb-8 bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-sm border border-rose-100">
           <div className="flex justify-between text-sm text-slate-600 mb-1.5">
             <span>Capacity</span>
             <span>{capacityPercentage}%</span>
           </div>
-          <Progress value={capacityPercentage} className="h-2.5" indicatorClassName="bg-amber-500" />
+          <Progress value={capacityPercentage} className="h-2.5" indicatorClassName="bg-rose-500" />
         </div>
         
         {/* Video Player */}
-        <div className="w-full mb-8">
+        <div className="w-full mb-8 rounded-xl overflow-hidden shadow-md">
           <VideoPlayer wistiaId="92627nrxy4" />
         </div>
         
@@ -98,7 +98,7 @@ const PreWebinar = () => {
         <div className="text-center">
           <Button 
             onClick={handleJoinWebinar}
-            className="text-lg px-8 py-6 h-auto bg-purple-600 hover:bg-purple-700 text-white rounded-lg gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="text-lg px-8 py-6 h-auto bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white rounded-lg gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
           >
             Join the Webinar Now
             <ArrowRight className="w-5 h-5" />
