@@ -141,7 +141,7 @@ const Index = () => {
         {/* Main Content Area */}
         <div className="space-y-6">
           {/* Video Section */}
-          <div className="rounded-xl overflow-hidden shadow-lg bg-white">
+          <div className="rounded-xl overflow-hidden shadow-lg bg-white border-2 border-slate-800">
             {/* Professional clean container */}
             <div className="relative overflow-hidden">
               {/* Light dot pattern for background styling */}
