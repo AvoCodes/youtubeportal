@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import VideoPlayer from '../components/VideoPlayer';
-import VideoTimeline from '../components/VideoTimeline';
 import CTAButton from '../components/CTAButton';
 import WebinarPoll from '../components/webinar/WebinarPoll';
 import { useToast } from '@/components/ui/use-toast';
@@ -191,11 +190,6 @@ const Index = () => {
                 {Math.floor(currentTime / 60)}:{Math.floor(currentTime % 60).toString().padStart(2, '0')} / 30:00
               </div>
             </div>
-          </div>
-
-          {/* Webinar Timeline */}
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
-            <VideoTimeline currentTime={currentTime} duration={1800} />
           </div>
 
           {/* Interactive Elements */}
