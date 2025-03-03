@@ -71,23 +71,20 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
         </div>
       </div>
       
-      {/* Clean bottom bar with viewer and like counts */}
-      <div className="bg-white py-3 px-4 border-t border-slate-100 flex items-center">
-        <div className="flex items-center gap-6 text-slate-700">
+      {/* Improved mobile-friendly bottom bar */}
+      <div className="bg-white py-3 px-4 border-t border-slate-100">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Users className="w-4 h-4 text-blue-600" />
-            <span className="font-medium">{viewerCount.toLocaleString()} watching now</span>
+            <span className="font-medium text-sm sm:text-base">{viewerCount.toLocaleString()} watching</span>
           </div>
           <div className="flex items-center gap-2">
             <ThumbsUp 
               className="w-4 h-4 text-blue-600 cursor-pointer" 
               onClick={onLike}
             />
-            <span className="font-medium">{likesCount.toLocaleString()}</span>
+            <span className="font-medium text-sm sm:text-base">{likesCount.toLocaleString()}</span>
           </div>
-        </div>
-        <div className="ml-auto text-sm text-slate-500">
-          {Math.floor(currentTime / 60)}:{Math.floor(currentTime % 60).toString().padStart(2, '0')} / 30:00
         </div>
       </div>
     </div>
