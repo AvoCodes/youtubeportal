@@ -26,17 +26,22 @@ const WebinarMilestoneDialog: React.FC<WebinarMilestoneDialogProps> = ({
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
+  // Determine milestone type based on ID to display appropriate content
+  const isFinalOffer = currentMilestone.id === MILESTONES[MILESTONES.length - 1].id;
+  const isEarlyBird = currentMilestone.id === MILESTONES[0].id;
+  const isBonusModule = !isEarlyBird && !isFinalOffer;
+
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="bg-white border-blue-100 max-w-xl">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-slate-900 text-2xl font-medium text-center">
-            {currentMilestone.type === 'early-bird' && "🎯 Early Action Bonus Unlocked"}
-            {currentMilestone.type === 'bonus-module' && "🎁 Special Module Access Granted"}
-            {currentMilestone.type === 'final-offer' && "⏰ Time-Sensitive Opportunity"}
+            {isEarlyBird && "🎯 Early Action Bonus Unlocked"}
+            {isBonusModule && "🎁 Special Module Access Granted"}
+            {isFinalOffer && "⏰ Time-Sensitive Opportunity"}
           </AlertDialogTitle>
           <AlertDialogDescription className="text-slate-600 text-center text-lg">
-            {currentMilestone.type === 'early-bird' && (
+            {isEarlyBird && (
               <div className="space-y-4">
                 <p>As one of our early action takers, you'll receive:</p>
                 <ul className="space-y-3 text-left">
@@ -55,7 +60,7 @@ const WebinarMilestoneDialog: React.FC<WebinarMilestoneDialogProps> = ({
                 </ul>
               </div>
             )}
-            {currentMilestone.type === 'bonus-module' && (
+            {isBonusModule && (
               <div className="space-y-4">
                 <p>You've unlocked our premium AI Script Generator!</p>
                 <div className="bg-slate-50 p-4 rounded-lg text-left">
@@ -77,7 +82,7 @@ const WebinarMilestoneDialog: React.FC<WebinarMilestoneDialogProps> = ({
                 </div>
               </div>
             )}
-            {currentMilestone.type === 'final-offer' && (
+            {isFinalOffer && (
               <div className="space-y-4">
                 <p>Don't miss out on this special offer!</p>
                 <div className="bg-amber-50 text-amber-700 p-4 rounded-lg">

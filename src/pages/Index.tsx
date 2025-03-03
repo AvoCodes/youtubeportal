@@ -1,23 +1,18 @@
 
 import React, { useState, useEffect } from 'react';
 import WebinarTags from '../components/webinar/WebinarTags';
-import WebinarPoll from '../components/webinar/WebinarPoll';
 import WebinarHeader from '../components/webinar/WebinarHeader';
 import WebinarVideo from '../components/webinar/WebinarVideo';
 import WebinarOffer from '../components/webinar/WebinarOffer';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
-import { NEW_ATTENDEES, POLLS, MILESTONES, CHAT_MESSAGES } from '../components/webinar/constants';
+import { NEW_ATTENDEES, MILESTONES, CHAT_MESSAGES } from '../components/webinar/constants';
 
 const Index = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [viewerCount, setViewerCount] = useState(1328);
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState({ title: "", message: "" });
-  const [showActivePoll, setShowActivePoll] = useState(false);
-  const [activePoll, setActivePoll] = useState(POLLS[0]);
-  const [selectedPollOption, setSelectedPollOption] = useState<number | null>(null);
-  const [pollResults, setPollResults] = useState<number[]>([]);
   const [showMilestoneOffer, setShowMilestoneOffer] = useState(false);
   const [currentMilestone, setCurrentMilestone] = useState(MILESTONES[0]);
   const [seatsRemaining, setSeatsRemaining] = useState(37);
@@ -34,15 +29,6 @@ const Index = () => {
           if (Math.random() > 0.3) {
             setSeatsRemaining(prev => Math.max(prev - 1, 5));
           }
-        }
-      });
-      
-      POLLS.forEach(poll => {
-        if (Math.abs(currentTime - poll.time) < 5) {
-          setActivePoll(poll);
-          setSelectedPollOption(null);
-          setPollResults(poll.options.map(() => Math.floor(Math.random() * 30) + 10));
-          setShowActivePoll(true);
         }
       });
       
@@ -76,19 +62,6 @@ const Index = () => {
 
   const handleTimeUpdate = (time: number) => {
     setCurrentTime(time);
-  };
-
-  const handlePollOptionSelect = (index: number) => {
-    setSelectedPollOption(index);
-    const newResults = [...pollResults];
-    newResults[index] += 1;
-    setPollResults(newResults);
-    
-    toast({
-      title: "Vote recorded!",
-      description: "Thank you for being active.",
-      duration: 3000,
-    });
   };
 
   const handleCloseMilestoneOffer = () => {
@@ -133,20 +106,6 @@ const Index = () => {
             notification={notification}
             onLike={handleLike}
           />
-
-          {/* Interactive Elements */}
-          {showActivePoll && (
-            <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom duration-500">
-              <WebinarPoll
-                question={activePoll.question}
-                options={activePoll.options}
-                results={pollResults}
-                selectedOption={selectedPollOption}
-                onOptionSelect={handlePollOptionSelect}
-                totalVotes={pollResults.reduce((a, b) => a + b, 0)}
-              />
-            </div>
-          )}
 
           {/* Special Offer Section */}
           {currentTime >= 1020 && (
