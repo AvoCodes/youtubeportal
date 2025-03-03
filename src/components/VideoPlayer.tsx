@@ -6,10 +6,13 @@ interface VideoPlayerProps {
   onTimeUpdate?: (time: number) => void;
 }
 
-// Add type definition for _wq
+// Add type definition for _wq and Wistia
 declare global {
   interface Window {
     _wq: any[];
+    Wistia?: {
+      embeds: () => void;
+    };
   }
 }
 

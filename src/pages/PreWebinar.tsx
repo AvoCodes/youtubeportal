@@ -49,11 +49,13 @@ const PreWebinar = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-rose-50/80 to-white flex flex-col items-center">
       <div className="max-w-5xl w-full px-4 py-12 md:py-16">
-        {/* Webinar Information */}
+        {/* Video Player moved to the top */}
+        <div className="w-full mb-8 rounded-xl overflow-hidden shadow-md">
+          <VideoPlayer wistiaId="qhu501egw5" />
+        </div>
+        
+        {/* Webinar Information - headline removed */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-4xl font-bold text-slate-900 mb-3">
-            The YouTube Portal: Make $57/Hr Without Showing Your Face.
-          </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-2">
             Reserve your seat! The live training starts soon.
           </p>
@@ -93,11 +95,6 @@ const PreWebinar = () => {
             <AlertTriangle className="w-4 h-4" />
             <span>Session closing soon due to high demand!</span>
           </div>
-        </div>
-        
-        {/* Video Player */}
-        <div className="w-full mb-8 rounded-xl overflow-hidden shadow-md">
-          <VideoPlayer wistiaId="qhu501egw5" />
         </div>
         
         {/* Join Button */}
