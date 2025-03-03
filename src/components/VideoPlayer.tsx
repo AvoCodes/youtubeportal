@@ -25,6 +25,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ wistiaId, onTimeUpdate }) => 
       script.src = '//fast.wistia.com/assets/external/E-v1.js';
       script.async = true;
       document.body.appendChild(script);
+      console.log('Wistia script loaded');
     }
     
     // No need to remove the script on cleanup as it should persist
@@ -32,11 +33,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ wistiaId, onTimeUpdate }) => 
 
   // Effect to initialize and update the player
   useEffect(() => {
+    console.log('VideoPlayer useEffect with wistiaId:', wistiaId);
+    console.log('Current wistiaId ref:', currentWistiaId.current);
+    
     // Check if the Wistia ID has changed
     if (currentWistiaId.current !== wistiaId) {
+      console.log('Wistia ID changed from', currentWistiaId.current, 'to', wistiaId);
+      
       // Force a refresh by cleaning up any existing elements
       const containers = document.querySelectorAll(`.wistia_embed.wistia_async_${currentWistiaId.current}`);
       containers.forEach(container => {
+        console.log('Clearing container for previous ID:', currentWistiaId.current);
         const parent = container.parentElement;
         if (parent) parent.innerHTML = '';
       });
@@ -53,10 +60,24 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ wistiaId, onTimeUpdate }) => 
 
     // Initialize Wistia player
     if (!hasInitialized.current) {
+      console.log('Initializing Wistia player for ID:', wistiaId);
+      
+      // Reset any previous _wq references to this video
+      if (window._wq) {
+        const newWq = [];
+        for (const item of window._wq) {
+          if (!item.id || item.id !== wistiaId) {
+            newWq.push(item);
+          }
+        }
+        window._wq = newWq;
+      }
+      
       window._wq = window._wq || [];
       window._wq.push({
         id: wistiaId,
         onReady: (video: any) => {
+          console.log('Wistia video ready for ID:', wistiaId);
           if (onTimeUpdate) {
             video.bind('timechange', () => handleTimeUpdate(video));
           }
@@ -64,18 +85,29 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ wistiaId, onTimeUpdate }) => 
         },
       });
       
+      // Force Wistia to re-scan for new embeds
+      if (window.Wistia && typeof window.Wistia.embeds === 'function') {
+        console.log('Forcing Wistia to re-scan the page');
+        window.Wistia.embeds();
+      }
+      
       // Create a new container element for the video
       // This helps force Wistia to recognize the new video ID
       setTimeout(() => {
         const container = document.querySelector(`.wistia_embed.wistia_async_${wistiaId}`);
-        if (container && !container.innerHTML.trim()) {
-          console.log('Reinitializing Wistia container for ID:', wistiaId);
-          // This will trigger Wistia to re-initialize
-          const parent = container.parentElement;
-          if (parent) {
-            const currentHTML = parent.innerHTML;
-            parent.innerHTML = currentHTML;
+        if (container) {
+          console.log('Container found for ID:', wistiaId);
+          if (!container.innerHTML.trim()) {
+            console.log('Reinitializing empty Wistia container for ID:', wistiaId);
+            // This will trigger Wistia to re-initialize
+            const parent = container.parentElement;
+            if (parent) {
+              const currentHTML = parent.innerHTML;
+              parent.innerHTML = currentHTML;
+            }
           }
+        } else {
+          console.log('No container found for ID:', wistiaId);
         }
       }, 100);
     }
