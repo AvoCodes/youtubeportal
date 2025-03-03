@@ -48,7 +48,7 @@ const PreWebinar = () => {
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-rose-50/80 to-white flex flex-col items-center">
-      <div className="max-w-5xl w-full px-4 py-12 md:py-16">
+      <div className="max-w-5xl w-full px-6 sm:px-8 md:px-12 py-12 md:py-16">
         {/* Video Player moved to the top */}
         <div className="w-full mb-8 rounded-xl overflow-hidden shadow-md">
           <VideoPlayer wistiaId="qhu501egw5" />

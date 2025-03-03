@@ -114,7 +114,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] pb-16">
-      <div className="max-w-[1600px] mx-auto p-4 pt-8 md:pt-12">
+      <div className="max-w-[1600px] mx-auto p-4 px-6 sm:px-8 md:px-12 pt-8 md:pt-12">
         {/* Webinar Header */}
         <WebinarHeader />
 
