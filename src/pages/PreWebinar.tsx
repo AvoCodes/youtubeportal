@@ -97,7 +97,7 @@ const PreWebinar = () => {
         
         {/* Video Player */}
         <div className="w-full mb-8 rounded-xl overflow-hidden shadow-md">
-          <VideoPlayer wistiaId="92627nrxy4" />
+          <VideoPlayer wistiaId="qhu501egw5" />
         </div>
         
         {/* Join Button */}
