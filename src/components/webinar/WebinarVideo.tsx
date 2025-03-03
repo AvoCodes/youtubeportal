@@ -1,9 +1,7 @@
-
 import React from 'react';
 import VideoPlayer from '../VideoPlayer';
 import { Progress } from '@/components/ui/progress';
 import { Users, ThumbsUp } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 
 interface WebinarVideoProps {
   currentTime: number;
@@ -25,7 +23,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
   onLike
 }) => {
   return (
-    <div className="rounded-xl overflow-hidden shadow-lg bg-white border-2 border-slate-800">
+    <div className="rounded-xl overflow-hidden shadow-lg bg-white border-4 border-slate-800/20">
       {/* Professional clean container */}
       <div className="relative overflow-hidden">
         {/* Light dot pattern for background styling */}
