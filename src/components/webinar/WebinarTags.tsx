@@ -11,7 +11,7 @@ const WebinarTags: React.FC = () => {
       </div>
       <div className="bg-emerald-50 text-emerald-600 px-2 sm:px-3 py-1 rounded-full flex items-center text-xs sm:text-sm font-medium border border-emerald-100 whitespace-nowrap flex-shrink-0">
         <CheckCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1 sm:mr-1.5" />
-        <span>Beginner</span>
+        <span>Beginner Friendly</span>
       </div>
       <div className="bg-amber-50 text-amber-600 px-2 sm:px-3 py-1 rounded-full flex items-center text-xs sm:text-sm font-medium border border-amber-100 whitespace-nowrap flex-shrink-0">
         <Trophy className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1 sm:mr-1.5" />
