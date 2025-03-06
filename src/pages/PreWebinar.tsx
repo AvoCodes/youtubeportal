@@ -47,13 +47,7 @@ const PreWebinar = () => {
   const remainingSeats = Math.floor((100 - capacityPercentage) / 100 * 500);
   
   return (
-    <div className="w-full mb-8 rounded-xl overflow-hidden shadow-xl relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-rose-600/20 to-red-700/20 mix-blend-overlay pointer-events-none z-10 rounded-xl"></div>
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 to-red-600 z-20"></div>
-          <VideoPlayer wistiaId="qhu501egw5" />
-        </div>
-        
-        {/* Webinar Information - headline removed */}
+    {/* Webinar Information - headline removed */}
         <div className="text-center mb-8">
           <p className="text-lg md:text-xl text-slate-600 mb-2">
             Reserve your seat! The live training starts soon.
@@ -61,6 +55,12 @@ const PreWebinar = () => {
           <div className="inline-block bg-rose-500/90 backdrop-blur-sm text-white px-4 py-1.5 rounded-full font-medium text-sm shadow-sm">
             With Daniel Bitton, Made First Million At 17.
           </div>
+        </div>
+    
+    <div className="w-full mb-8 rounded-xl overflow-hidden shadow-xl relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-rose-600/20 to-red-700/20 mix-blend-overlay pointer-events-none z-10 rounded-xl"></div>
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 to-red-600 z-20"></div>
+          <VideoPlayer wistiaId="qhu501egw5" />
         </div>
         
         {/* Timer & Capacity */}
