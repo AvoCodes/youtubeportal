@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import WebinarTags from '../components/webinar/WebinarTags';
 import WebinarHeader from '../components/webinar/WebinarHeader';
@@ -21,9 +20,8 @@ const Index = () => {
   const [countdown, setCountdown] = useState(600);
   const [likesCount, setLikesCount] = useState(2134);
   
-  // Define the checkout URLs
-  const oneTimePaymentUrl = "https://checkout.example.com/one-time";
-  const splitPaymentUrl = "https://checkout.example.com/split-pay";
+  const oneTimePaymentUrl = "https://whop.com/checkout/plan_FOQ8hdiCxdex3/";
+  const splitPaymentUrl = "https://whop.com/checkout/plan_rzFcf1TvyIStA/";
   
   const { toast } = useToast();
 
@@ -95,15 +93,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] pb-16">
       <div className="max-w-[1600px] mx-auto p-4 px-6 sm:px-8 md:px-12 pt-8 md:pt-12">
-        {/* Webinar Header */}
         <WebinarHeader />
-
-        {/* Webinar Tags/Labels */}
         <WebinarTags />
-
-        {/* Main Content Area */}
         <div className="space-y-6">
-          {/* Video Section */}
           <WebinarVideo 
             currentTime={currentTime}
             viewerCount={viewerCount}
@@ -113,8 +105,6 @@ const Index = () => {
             notification={notification}
             onLike={handleLike}
           />
-
-          {/* Special Offer Section */}
           {currentTime >= 1020 && (
             <WebinarOffer 
               seatsRemaining={seatsRemaining}
@@ -127,8 +117,6 @@ const Index = () => {
           )}
         </div>
       </div>
-      
-      {/* Milestone Dialog */}
       <WebinarMilestoneDialog 
         open={showMilestoneOffer && currentTime >= 1020}
         onOpenChange={setShowMilestoneOffer}
