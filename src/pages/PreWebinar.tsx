@@ -47,10 +47,9 @@ const PreWebinar = () => {
   const remainingSeats = Math.floor((100 - capacityPercentage) / 100 * 500);
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-rose-50/80 to-white flex flex-col items-center">
-      <div className="max-w-5xl w-full px-6 sm:px-8 md:px-12 py-12 md:py-16">
-        {/* Video Player moved to the top */}
-        <div className="w-full mb-8 rounded-xl overflow-hidden shadow-md">
+    <div className="w-full mb-8 rounded-xl overflow-hidden shadow-xl relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-rose-600/20 to-red-700/20 mix-blend-overlay pointer-events-none z-10 rounded-xl"></div>
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 to-red-600 z-20"></div>
           <VideoPlayer wistiaId="qhu501egw5" />
         </div>
         
