@@ -7,6 +7,7 @@ import WebinarOffer from '../components/webinar/WebinarOffer';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
 import { NEW_ATTENDEES, MILESTONES, CHAT_MESSAGES } from '../components/webinar/constants';
+import { PaymentOption } from '../components/CTAButton';
 
 const Index = () => {
   const [currentTime, setCurrentTime] = useState(0);
@@ -19,6 +20,10 @@ const Index = () => {
   const [countdownActive, setCountdownActive] = useState(false);
   const [countdown, setCountdown] = useState(600);
   const [likesCount, setLikesCount] = useState(2134);
+  
+  // Define the checkout URLs
+  const oneTimePaymentUrl = "https://checkout.example.com/one-time";
+  const splitPaymentUrl = "https://checkout.example.com/split-pay";
   
   const { toast } = useToast();
 
@@ -77,10 +82,12 @@ const Index = () => {
     });
   };
 
-  const handleCTAClick = () => {
+  const handleCTAClick = (paymentOption: PaymentOption) => {
     toast({
-      title: "🎉 Congrats!",
-      description: "You're being redirected to the secure enrollment page...",
+      title: "🎉 Redirecting to checkout...",
+      description: paymentOption === 'one-time' 
+        ? "You selected the one-time payment option" 
+        : "You selected the split-pay option",
       duration: 3000,
     });
   };
@@ -114,6 +121,8 @@ const Index = () => {
               countdownActive={countdownActive}
               countdown={countdown}
               onCTAClick={handleCTAClick}
+              oneTimePaymentUrl={oneTimePaymentUrl}
+              splitPaymentUrl={splitPaymentUrl}
             />
           )}
         </div>
