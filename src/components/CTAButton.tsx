@@ -39,9 +39,9 @@ const CTAButton: React.FC<CTAButtonProps> = ({
 
   const getButtonStyle = () => {
     if (paymentOption === 'one-time') {
-      return "bg-purple-600 hover:bg-purple-700 text-white";
+      return "bg-blue-600 hover:bg-blue-700 text-white";
     } else {
-      return "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white";
+      return "bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white";
     }
   };
 
