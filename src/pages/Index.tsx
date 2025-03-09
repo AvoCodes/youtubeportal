@@ -20,8 +20,8 @@ const Index = () => {
   const [countdown, setCountdown] = useState(600);
   const [likesCount, setLikesCount] = useState(2134);
   
-  const oneTimePaymentUrl = "https://whop.com/checkout/plan_FOQ8hdiCxdex3/";
-  const splitPaymentUrl = "https://whop.com/checkout/plan_rzFcf1TvyIStA/";
+  const oneTimePaymentUrl = "https://whop.com/c/yt-portal-webinar/ot";
+  const splitPaymentUrl = "https://whop.com/c/yt-portal-webinar/pp";
   
   const { toast } = useToast();
 
