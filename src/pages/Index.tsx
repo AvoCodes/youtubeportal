@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import WebinarTags from '../components/webinar/WebinarTags';
 import WebinarHeader from '../components/webinar/WebinarHeader';
@@ -91,7 +92,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] pb-16">
+    <div className="min-h-screen bg-white pb-16">
       <div className="max-w-[1600px] mx-auto p-4 px-6 sm:px-8 md:px-12 pt-8 md:pt-12">
         <WebinarHeader />
         <WebinarTags />
