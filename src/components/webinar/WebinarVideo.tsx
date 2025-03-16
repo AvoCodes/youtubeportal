@@ -30,7 +30,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 5000);
     
     return () => clearTimeout(timer);
   }, []);
