@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import VideoPlayer from '../VideoPlayer';
 import { Progress } from '@/components/ui/progress';
-import { Users, ThumbsUp } from 'lucide-react';
+import { Users, ThumbsUp, Zap, Play } from 'lucide-react';
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface WebinarVideoProps {
   currentTime: number;
@@ -23,6 +24,17 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
   notification,
   onLike
 }) => {
+  const [loading, setLoading] = useState(true);
+
+  // Simulate video loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="w-full mb-8 rounded-xl overflow-hidden shadow-xl relative">
       <div className="absolute inset-0 bg-gradient-to-r from-rose-600/20 to-red-700/20 mix-blend-overlay pointer-events-none z-10 rounded-xl"></div>
@@ -34,6 +46,30 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
           wistiaId="92627nrxy4"
           onTimeUpdate={onTimeUpdate}
         />
+        
+        {/* Loading overlay */}
+        {loading && (
+          <div className="absolute inset-0 bg-black/80 z-20 flex flex-col items-center justify-center">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-6 h-6 text-red-500 animate-pulse" />
+              <span className="text-white font-semibold text-lg tracking-wider animate-pulse">LIVE</span>
+            </div>
+            <div className="flex items-center gap-2 mb-4">
+              <Skeleton className="w-12 h-2 bg-gray-700" />
+              <Skeleton className="w-24 h-2 bg-gray-700" />
+              <Skeleton className="w-16 h-2 bg-gray-700" />
+            </div>
+            <div className="relative w-16 h-16 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border-4 border-t-red-500 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+              <Play className="w-8 h-8 text-white" />
+            </div>
+            <p className="text-gray-300 text-sm mt-4">Connecting to live stream...</p>
+            <div className="flex items-center gap-2 mt-5">
+              <Users className="w-4 h-4 text-blue-400" />
+              <span className="text-gray-300 text-sm">{viewerCount} waiting</span>
+            </div>
+          </div>
+        )}
         
         {/* Progress Bar */}
         <div className="absolute bottom-0 left-0 right-0 h-1.5">
