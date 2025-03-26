@@ -7,7 +7,7 @@ const WebinarTags: React.FC = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="flex justify-center md:justify-start flex-row overflow-x-auto gap-2 sm:gap-4 mb-2 sm:mb-4 no-scrollbar pb-1">
+    <div className="flex justify-center md:justify-start flex-row overflow-x-auto gap-2 sm:gap-4 mb-2 sm:mb-4 no-scrollbar pb-1 mt-5">
       <div className="bg-rose-500/20 text-rose-400 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full flex items-center text-xs sm:text-sm font-medium border border-rose-500/30 whitespace-nowrap flex-shrink-0 backdrop-blur-sm shadow-lg shadow-rose-500/10">
         <Radio className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 mr-1 sm:mr-2 animate-pulse" />
         <span>LIVE</span>
