@@ -1,22 +1,3 @@
-// Webinar attendee data with timestamps for when they join
-export const NEW_ATTENDEES = [
-  { name: "Sarah Johnson", time: 180 },
-  { name: "Michael Chen", time: 240 },
-  { name: "Jessica Rodriguez", time: 360 },
-  { name: "David Kim", time: 480 },
-  { name: "Emily Wilson", time: 720 },
-  { name: "Robert Taylor", time: 840 },
-  { name: "Amanda Brown", time: 1080 },
-  { name: "Daniel Martinez", time: 1200 },
-  { name: "Olivia Davis", time: 1440 },
-  { name: "James Thomas", time: 1620 },
-  { name: "Sophia Jackson", time: 1800 },
-  { name: "Matthew White", time: 2040 },
-  { name: "Emma Harris", time: 2280 },
-  { name: "Christopher Lee", time: 2520 },
-  { name: "Ava Clark", time: 2760 },
-];
-
 // Poll data for interactive webinar engagement
 export const POLLS = [
   {
@@ -67,7 +48,7 @@ export const POLLS = [
 
 // Chat messages for simulated live interaction with the new format
 // Hour,Minute,Second,Name,Role,Message,Mode
-export const CHAT_MESSAGES = [
+export const NEW_ATTENDEES = [
   [
   {
     Hour: "0",
