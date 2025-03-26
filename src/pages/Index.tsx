@@ -7,22 +7,8 @@ import { Clock, Zap, Play, Volume2, VolumeX, ArrowRight } from 'lucide-react';
 import VideoPlayer from '../components/VideoPlayer';
 import { Progress } from '@/components/ui/progress';
 
-// Define milestones directly in this component
+// Define only the final offer milestone
 const MILESTONES_DATA = [
-  {
-    id: "early-bird",
-    title: "Early Bird Access",
-    description: "Get access to exclusive early bird bonuses",
-    time: 1020,
-    discount: 20
-  },
-  {
-    id: "bonus-module",
-    title: "Bonus Module",
-    description: "Unlock premium AI Script Generator",
-    time: 1800,
-    discount: 15
-  },
   {
     id: "final-offer",
     title: "Final Offer",
@@ -32,32 +18,17 @@ const MILESTONES_DATA = [
   }
 ];
 
-// Define new attendees locally
-const NEW_ATTENDEES = [
-  { time: 360, name: "Ethan" },
-  { time: 720, name: "Isabella" },
-  { time: 1080, name: "Noah" },
-  { time: 1440, name: "Amelia" },
-  { time: 1800, name: "Jackson" },
-  { time: 2160, name: "Sophia" },
-  { time: 2520, name: "Lucas" },
-  { time: 2880, name: "Olivia" },
-  { time: 3240, name: "Liam" }
-];
-
 const Index = () => {
   const [currentTime, setCurrentTime] = useState(0);
-  const [viewerCount, setViewerCount] = useState(1328);
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState({ title: "", message: "" });
   const [showMilestoneOffer, setShowMilestoneOffer] = useState(false);
   const [seatsRemaining, setSeatsRemaining] = useState(37);
   const [countdownActive, setCountdownActive] = useState(false);
   const [countdown, setCountdown] = useState(600);
-  const [likesCount, setLikesCount] = useState(2134);
-  const [currentMilestone, setCurrentMilestone] = useState(MILESTONES_DATA[0]);
   const [loading, setLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
+  const [currentMilestone, setCurrentMilestone] = useState(MILESTONES_DATA[0]);
   
   const oneTimePaymentUrl = "https://whop.com/c/yt-portal-webinar/ot";
   const splitPaymentUrl = "https://whop.com/c/yt-portal-webinar/pp";
@@ -76,24 +47,11 @@ const Index = () => {
 
   useEffect(() => {
     const handleTimeBasedEvents = () => {
-      NEW_ATTENDEES.forEach(attendee => {
-        if (Math.abs(currentTime - attendee.time) < 5) {
-          if (Math.random() > 0.3) {
-            setSeatsRemaining(prev => Math.max(prev - 1, 5));
-          }
-        }
-      });
-      
-      MILESTONES_DATA.forEach(milestone => {
-        if (Math.abs(currentTime - milestone.time) < 5) {
-          setCurrentMilestone(milestone);
-          setShowMilestoneOffer(true);
-          
-          if (milestone.id === MILESTONES_DATA[MILESTONES_DATA.length - 1].id) {
-            setCountdownActive(true);
-          }
-        }
-      });
+      // Check only for the final milestone
+      if (Math.abs(currentTime - MILESTONES_DATA[0].time) < 5) {
+        setShowMilestoneOffer(true);
+        setCountdownActive(true);
+      }
     };
     
     handleTimeBasedEvents();
@@ -112,35 +70,12 @@ const Index = () => {
     };
   }, [countdownActive, countdown]);
 
-  // Simulate viewer count increasing during webinar
-  useEffect(() => {
-    const increaseViewers = () => {
-      if (currentTime > 300 && currentTime < 4800) { // Only increase during main part of webinar
-        if (Math.random() > 0.7) {
-          setViewerCount(prev => prev + Math.floor(Math.random() * 3) + 1);
-        }
-      }
-    };
-
-    const intervalId = setInterval(increaseViewers, 15000);
-    return () => clearInterval(intervalId);
-  }, [currentTime]);
-
   const handleTimeUpdate = (time: number) => {
     setCurrentTime(time);
   };
 
   const handleCloseMilestoneOffer = () => {
     setShowMilestoneOffer(false);
-  };
-
-  const handleLike = () => {
-    setLikesCount(prev => prev + 1);
-    toast({
-      title: "Thanks for the like!",
-      description: "Your engagement helps the community.",
-      duration: 3000,
-    });
   };
 
   const handleCTAClick = (paymentOption: PaymentOption) => {
