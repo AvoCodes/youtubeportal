@@ -40718,4 +40718,4 @@ export const NEW_ATTENDEES = [
     Message: "PEACE DAN!!!",
     Mode: "Text"
   },
-];
+],
