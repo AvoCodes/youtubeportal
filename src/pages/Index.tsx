@@ -7,7 +7,7 @@ import WebinarOffer from '../components/webinar/WebinarOffer';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
 import { PaymentOption } from '../components/CTAButton';
-import { NEW_ATTENDEES, MILESTONES } from '../components/webinar/constants';
+import { NEW_ATTENDEES } from '../components/webinar/constants';
 
 const Index = () => {
   const [currentTime, setCurrentTime] = useState(0);
