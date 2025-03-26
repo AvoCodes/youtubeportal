@@ -1,10 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import WebinarOffer from '../components/webinar/WebinarOffer';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
 import { PaymentOption } from '../components/CTAButton';
-import { Clock, Users, Zap, Play, Volume2, VolumeX } from 'lucide-react';
+import { Clock, Zap, Play, Volume2, VolumeX, ArrowRight } from 'lucide-react';
 import VideoPlayer from '../components/VideoPlayer';
 import { Progress } from '@/components/ui/progress';
 
@@ -159,8 +158,19 @@ const Index = () => {
     // Actual muting would need to be integrated with the video player
   };
 
+  // Format time for countdown display
+  const formatCountdown = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
   return (
     <div className="h-screen w-screen overflow-hidden relative bg-black">
+      {/* Cinematic letterbox effect - top and bottom black bars */}
+      <div className="absolute top-0 left-0 right-0 h-[8%] bg-black z-30 shadow-[0_0_20px_rgba(0,0,0,0.9)]"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-[8%] bg-black z-30 shadow-[0_0_20px_rgba(0,0,0,0.9)]"></div>
+      
       {/* Absolutely positioned video that takes 100% of viewport */}
       <div className="absolute inset-0 w-full h-full z-0">
         <VideoPlayer
@@ -169,12 +179,22 @@ const Index = () => {
         />
       </div>
 
-      {/* Optional subtle vignette for depth */}
-      <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-black via-transparent to-black/30 opacity-70"></div>
+      {/* Film grain texture overlay for cinematic feel */}
+      <div 
+        className="absolute inset-0 z-10 pointer-events-none opacity-10 mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      ></div>
+      
+      {/* Optional vignette effect for depth */}
+      <div className="absolute inset-0 z-10 pointer-events-none box-border" style={{
+        boxShadow: 'inset 0 0 150px rgba(0, 0, 0, 0.9)'
+      }}></div>
       
       {/* Loading overlay */}
       {loading && (
-        <div className="absolute inset-0 bg-black/90 z-50 flex flex-col items-center justify-center">
+        <div className="absolute inset-0 bg-black/95 z-50 flex flex-col items-center justify-center">
           <div className="relative w-28 h-28 flex items-center justify-center mb-12">
             <div className="absolute inset-0 rounded-full border-4 border-t-red-500 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
             <div className="absolute inset-0 rounded-full border-4 border-t-transparent border-r-blue-500 border-b-transparent border-l-transparent animate-spin" style={{animationDelay: "300ms"}}></div>
@@ -190,41 +210,26 @@ const Index = () => {
           <p className="text-gray-300 text-sm mt-2">
             With Daniel Bitton, Made First Million At 17
           </p>
-          <div className="flex items-center gap-3 mt-8">
-            <div className="flex items-center gap-1">
-              <Users className="w-4 h-4 text-blue-400" />
-              <span className="text-gray-300 text-xs">{viewerCount} waiting</span>
-            </div>
-            <div className="h-3 w-px bg-gray-700"></div>
-            <p className="text-gray-300 text-xs">Connecting to live stream...</p>
-          </div>
+          <p className="text-gray-400 text-xs mt-8">Connecting to live stream...</p>
         </div>
       )}
       
       {/* Minimal UI elements - top right corner */}
-      <div className="absolute top-4 right-4 z-20 flex gap-2">
+      <div className="absolute top-[10%] right-6 z-20 flex gap-3">
         <button 
           onClick={toggleMute} 
-          className="bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white p-2 rounded-full"
+          className="bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white p-2 rounded-full transition-colors"
         >
           {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
         </button>
-        <div className="bg-black/40 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs flex items-center gap-1.5">
+        <div className="bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs flex items-center gap-1.5 border border-red-500/30">
           <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div>
           LIVE
         </div>
       </div>
       
-      {/* Minimal viewer count - bottom left */}
-      <div className="absolute bottom-10 left-4 z-20">
-        <div className="bg-black/40 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm flex items-center gap-2">
-          <Users size={14} /> 
-          {viewerCount.toLocaleString()}
-        </div>
-      </div>
-      
-      {/* Progress bar (absolutely minimal) */}
-      <div className="absolute bottom-0 left-0 right-0 z-20">
+      {/* Progress bar within the black bar area */}
+      <div className="absolute bottom-[8%] left-0 right-0 z-40 transform translate-y-[-10px]">
         <Progress 
           value={(currentTime / videoDuration) * 100} 
           className="h-1" 
@@ -234,7 +239,7 @@ const Index = () => {
       
       {/* CTA section (bottom of screen, appears when triggered) */}
       {currentTime >= 2040 && (
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent pt-16 pb-6 px-4 md:px-6 z-20">
+        <div className="absolute bottom-[8%] left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent pt-16 pb-6 px-8 z-20">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
               {/* Left side: Key points */}
@@ -243,7 +248,7 @@ const Index = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <div className="rounded-full bg-blue-500/20 p-1 mt-0.5">
-                      <Users size={14} className="text-blue-400" />
+                      <span className="block h-3.5 w-3.5 rounded-full bg-blue-400/70"></span>
                     </div>
                     <p className="text-sm text-gray-300">Only <span className="text-blue-400 font-bold">{seatsRemaining}</span> spots remaining</p>
                   </div>
@@ -263,18 +268,18 @@ const Index = () => {
               <div className="space-y-3">
                 <button 
                   onClick={() => handleCTAClick('one-time')}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg py-3 px-4 font-medium flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 border border-blue-500/30 transition-all duration-300 hover:-translate-y-0.5"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg py-4 px-4 font-medium flex items-center justify-center gap-2 shadow-lg shadow-blue-900/30 border border-blue-500/40 transition-all duration-300 hover:-translate-y-0.5"
                 >
                   <span>One-Time Payment ($995)</span>
-                  <ArrowRight size={16} />
+                  <ArrowRight size={16} className="ml-1" />
                 </button>
                 
                 <button 
                   onClick={() => handleCTAClick('split-pay')}
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg py-3 px-4 font-medium flex items-center justify-center gap-2 shadow-lg shadow-purple-900/20 border border-purple-500/30 transition-all duration-300 hover:-translate-y-0.5"
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg py-4 px-4 font-medium flex items-center justify-center gap-2 shadow-lg shadow-purple-900/30 border border-purple-500/40 transition-all duration-300 hover:-translate-y-0.5"
                 >
                   <span>4 Monthly Payments ($399)</span>
-                  <ArrowRight size={16} />
+                  <ArrowRight size={16} className="ml-1" />
                 </button>
               </div>
             </div>
