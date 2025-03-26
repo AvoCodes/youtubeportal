@@ -72,7 +72,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
         {/* Video player */}
         <div className="relative z-10 flex-1">
           <VideoPlayer
-            wistiaId="k0uywu1qxe"
+            wistiaId="1a1gto8igi"
             onTimeUpdate={onTimeUpdate}
           />
           
