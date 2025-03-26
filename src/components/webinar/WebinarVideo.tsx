@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import VideoPlayer from '../VideoPlayer';
 import { Progress } from '@/components/ui/progress';
-import { Users, ThumbsUp, Zap, Play } from 'lucide-react';
+import { Users, ThumbsUp, Zap, Play, MessageSquare, X } from 'lucide-react';
 import { Skeleton } from "@/components/ui/skeleton";
 import LiveChat from '../LiveChat';
 import { CHAT_MESSAGES } from './constants';
@@ -28,6 +28,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [visibleChatMessages, setVisibleChatMessages] = useState<any[]>([]);
+  const [chatExpanded, setChatExpanded] = useState(false);
   const videoDuration = 5263; // 1 hour, 27 minutes, 43 seconds in seconds
   
   // Filter chat messages based on current time
@@ -63,14 +64,18 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
+  const toggleChat = () => {
+    setChatExpanded(!chatExpanded);
+  };
+
   return (
     <div className="w-full mb-8 rounded-xl overflow-hidden shadow-xl relative">
       <div className="absolute inset-0 bg-gradient-to-r from-rose-600/20 to-red-700/20 mix-blend-overlay pointer-events-none z-10 rounded-xl"></div>
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 to-red-600 z-20"></div>
       
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row relative">
         {/* Video player */}
-        <div className="relative z-10 flex-1">
+        <div className={`relative z-10 flex-1 ${chatExpanded ? 'md:w-2/3' : 'w-full'}`}>
           <VideoPlayer
             wistiaId="1a1gto8igi"
             onTimeUpdate={onTimeUpdate}
@@ -117,16 +122,29 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
           )}
         </div>
         
-        {/* Live Chat - Hidden on mobile, shown on desktop */}
-        <div className="hidden md:block md:w-80 lg:w-96 border-l border-gray-200">
-          <LiveChat 
-            messages={visibleChatMessages} 
-            currentTime={currentTime}
-            viewerCount={viewerCount}
-            likesCount={likesCount}
-            onLike={onLike}
-          />
+        {/* Live Chat - Now togglable */}
+        <div className={`md:border-l border-gray-200 bg-white transition-all duration-300 ease-in-out md:absolute md:right-0 md:top-0 md:bottom-0 md:h-full z-20 ${
+          chatExpanded ? 'md:w-1/3 max-w-sm' : 'md:w-0 md:opacity-0 md:overflow-hidden'
+        }`}>
+          {chatExpanded && (
+            <LiveChat 
+              messages={visibleChatMessages} 
+              currentTime={currentTime}
+              viewerCount={viewerCount}
+              likesCount={likesCount}
+              onLike={onLike}
+            />
+          )}
         </div>
+
+        {/* Chat toggle button - visible on desktop */}
+        <button 
+          onClick={toggleChat}
+          className="hidden md:flex items-center justify-center p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-l-md absolute right-0 top-4 z-30 transition-all duration-300 shadow-md"
+          style={{ transform: chatExpanded ? 'translateX(-100%)' : 'translateX(0)' }}
+        >
+          {chatExpanded ? <X className="w-4 h-4" /> : <MessageSquare className="w-4 h-4" />}
+        </button>
       </div>
       
       {/* Bottom stats bar */}
@@ -136,12 +154,21 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
             <Users className="w-4 h-4 text-blue-600" />
             <span className="font-medium text-sm sm:text-base">{viewerCount.toLocaleString()} watching</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <ThumbsUp 
               className="w-4 h-4 text-blue-600 cursor-pointer" 
               onClick={onLike}
             />
             <span className="font-medium text-sm sm:text-base">{likesCount.toLocaleString()}</span>
+            
+            {/* Chat toggle button - visible on mobile */}
+            <button 
+              onClick={toggleChat}
+              className="md:hidden flex items-center gap-1 text-blue-600"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span className="text-sm">{visibleChatMessages.length}</span>
+            </button>
           </div>
         </div>
       </div>

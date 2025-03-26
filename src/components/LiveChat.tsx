@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MessagesSquare, ThumbsDown, ThumbsUp, Users } from 'lucide-react';
+import { MessagesSquare, ThumbsDown, ThumbsUp, Users, X } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   DropdownMenu,
@@ -27,6 +27,7 @@ interface LiveChatProps {
   likesCount?: number;
   onLike?: () => void;
   hasLiked?: boolean;
+  onClose?: () => void;
 }
 
 const LiveChat: React.FC<LiveChatProps> = ({ 
@@ -34,7 +35,8 @@ const LiveChat: React.FC<LiveChatProps> = ({
   viewerCount = 0,
   likesCount = 0,
   onLike,
-  hasLiked = false
+  hasLiked = false,
+  onClose
 }) => {
   const [sortBy, setSortBy] = React.useState<'top' | 'newest'>('top');
 
