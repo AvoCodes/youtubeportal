@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import VideoPlayer from '../VideoPlayer';
 import { Progress } from '@/components/ui/progress';
@@ -33,22 +34,31 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
   // Filter chat messages based on current time
   useEffect(() => {
     const filteredMessages = CHAT_MESSAGES
-      .filter(msg => msg.time <= currentTime)
+      .filter(msg => {
+        // Convert HH:MM:SS to seconds for comparison with currentTime
+        const totalSeconds = (msg.hour * 3600) + (msg.minute * 60) + msg.second;
+        return totalSeconds <= currentTime;
+      })
       .map((msg, index) => ({
         id: index + 1,
-        author: msg.user,
+        name: msg.name,
+        role: msg.role,
         message: msg.message,
-        timestamp: msg.time,
+        hour: msg.hour,
+        minute: msg.minute,
+        second: msg.second,
+        mode: msg.mode,
         likes: Math.floor(Math.random() * 10),
-        timeAgo: getTimeAgo(msg.time)
+        timeAgo: getTimeAgo(msg)
       }));
     
     setVisibleChatMessages(filteredMessages);
   }, [currentTime]);
 
   // Function to generate relative time for chat messages
-  const getTimeAgo = (messageTime: number) => {
-    const diff = currentTime - messageTime;
+  const getTimeAgo = (msg: any) => {
+    const messageTotalSeconds = (msg.hour * 3600) + (msg.minute * 60) + msg.second;
+    const diff = currentTime - messageTotalSeconds;
     if (diff < 60) return 'just now';
     if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
     return `${Math.floor(diff / 3600)}h ago`;
