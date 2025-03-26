@@ -6,6 +6,8 @@ import { PaymentOption } from '../components/CTAButton';
 import { Clock, Zap, Play, Volume2, VolumeX, ArrowRight, ChevronUp, ChevronDown, Maximize, Minimize } from 'lucide-react';
 import VideoPlayer from '../components/VideoPlayer';
 import { Progress } from '@/components/ui/progress';
+import { useIsMobile } from '@/hooks/use-mobile';
+import WebinarTags from '../components/webinar/WebinarTags';
 
 // Define only the final offer milestone
 const MILESTONES_DATA = [
@@ -34,6 +36,7 @@ const Index = () => {
   const [ctaVisible, setCTAVisible] = useState(false);
   const [ctaMinimized, setCTAMinimized] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   
   const oneTimePaymentUrl = "https://whop.com/c/yt-portal-webinar/ot";
   const splitPaymentUrl = "https://whop.com/c/yt-portal-webinar/pp";
@@ -186,23 +189,69 @@ const Index = () => {
       return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     }
   };
+
   return (
     <div 
       ref={containerRef}
       className="h-screen w-screen overflow-hidden relative bg-black"
     >
       {/* Cinematic letterbox effect - top and bottom black bars with premium depth */}
-      <div className="absolute top-0 left-0 right-0 h-[8%] bg-black z-30 shadow-[0_0_30px_8px_rgba(0,0,0,0.95)]"></div>
-      <div className="absolute bottom-0 left-0 right-0 h-[8%] bg-black z-30 shadow-[0_0_30px_8px_rgba(0,0,0,0.95)]"></div>
+      <div className={`absolute top-0 left-0 right-0 ${isMobile ? 'h-[3%]' : 'h-[8%]'} bg-black z-30 shadow-[0_0_30px_8px_rgba(0,0,0,0.95)]`}></div>
+      <div className={`absolute bottom-0 left-0 right-0 ${isMobile ? 'h-[3%]' : 'h-[8%]'} bg-black z-30 shadow-[0_0_30px_8px_rgba(0,0,0,0.95)]`}></div>
       
-      {/* Absolutely positioned video */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        <VideoPlayer
-          wistiaId="1a1gto8igi"
-          onTimeUpdate={handleTimeUpdate}
-        />
-      </div>
+      {/* Mobile-optimized content container */}
+      <div className={`absolute inset-0 ${isMobile ? 'top-[3%] bottom-[3%]' : 'top-[8%] bottom-[8%]'} z-0 flex flex-col`}>
+        {/* Absolutely positioned video */}
+        <div className="w-full h-auto relative">
+          <VideoPlayer
+            wistiaId="1a1gto8igi"
+            onTimeUpdate={handleTimeUpdate}
+          />
+        </div>
 
+        {/* Mobile-optimized content below video */}
+        {isMobile && !loading && (
+          <div className="flex-1 overflow-y-auto px-3 pt-3 pb-16 bg-black">
+            <WebinarTags />
+            
+            {/* Mobile-friendly CTA that's always visible */}
+            <div className="bg-gradient-to-b from-gray-900 to-black rounded-xl p-4 mb-5 border border-gray-800">
+              <div className="space-y-3">
+                <h3 className="text-white text-lg font-semibold tracking-tight">AI YouTube Shorts Blueprint</h3>
+                <div className="grid grid-cols-1 gap-2">
+                  <button 
+                    onClick={() => handleCTAClick('one-time')}
+                    className="group w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg py-3 px-4 font-medium flex items-center justify-center gap-2 shadow-lg shadow-blue-900/30 border border-blue-500/40 transition-all duration-300 text-sm"
+                  >
+                    <span>One-Time Payment ($995)</span>
+                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </button>
+                  
+                  <button 
+                    onClick={() => handleCTAClick('split-pay')}
+                    className="group w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg py-3 px-4 font-medium flex items-center justify-center gap-2 shadow-lg shadow-purple-900/30 border border-purple-500/40 transition-all duration-300 text-sm"
+                  >
+                    <span>4 Monthly Payments ($399)</span>
+                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </button>
+                </div>
+                
+                {/* Timer and seats for mobile */}
+                <div className="flex justify-between text-xs text-gray-400">
+                  <div className="flex items-center gap-1">
+                    <Clock size={12} />
+                    <span>{formatCountdown(countdown)}</span>
+                  </div>
+                  <div>
+                    Only {seatsRemaining} spots left
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      
       {/* Premium film grain with variable opacity */}
       <div 
         className="absolute inset-0 z-10 pointer-events-none opacity-[0.08] mix-blend-soft-light"
@@ -257,61 +306,63 @@ const Index = () => {
         </div>
       )}
       
-      {/* Controls overlays with fade-in/out */}
-      <div className={`absolute inset-0 z-40 pointer-events-none transition-opacity duration-500 ease-in-out ${controlsVisible ? 'opacity-100' : 'opacity-0'}`}>
-        {/* Top controls bar with subtle gradient */}
-        <div className="absolute top-[8%] left-0 right-0 p-4 sm:p-6 pointer-events-auto">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className="bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs flex items-center gap-1.5 border border-red-500/20 shadow-sm">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
-                <span className="font-medium tracking-wide">LIVE</span>
+      {/* Controls overlays with fade-in/out - only show on desktop or when needed */}
+      {(!isMobile || controlsVisible) && (
+        <div className={`absolute inset-0 z-40 pointer-events-none transition-opacity duration-500 ease-in-out ${controlsVisible ? 'opacity-100' : 'opacity-0'}`}>
+          {/* Top controls bar with subtle gradient */}
+          <div className={`absolute ${isMobile ? 'top-[3%]' : 'top-[8%]'} left-0 right-0 p-4 sm:p-6 pointer-events-auto`}>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs flex items-center gap-1.5 border border-red-500/20 shadow-sm">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-[pulse_2s_ease-in-out_infinite]"></div>
+                  <span className="font-medium tracking-wide">LIVE</span>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={toggleMute} 
-                className="bg-black/60 hover:bg-black/80 backdrop-blur-md text-white/90 p-2 rounded-full transition-all duration-300 border border-white/10 shadow-sm hover:scale-105"
-              >
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-              </button>
-              <button
-                onClick={toggleFullscreen}
-                className="bg-black/60 hover:bg-black/80 backdrop-blur-md text-white/90 p-2 rounded-full transition-all duration-300 border border-white/10 shadow-sm hover:scale-105"
-              >
-                {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        {/* Bottom controls with premium timeline */}
-        <div className="absolute bottom-[8%] left-0 right-0 pointer-events-auto transform translate-y-[-14px]">
-          {/* Sophisticated progress bar */}
-          <div className="px-4 sm:px-6">
-            <div className="relative">
-              {/* Background track */}
-              <div className="h-1 bg-white/10 overflow-hidden rounded-full backdrop-blur-sm">
-                {/* Progress indicator with gradient */}
-                <div 
-                  className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 transition-all duration-300 ease-linear rounded-full"
-                  style={{ width: `${(currentTime / videoDuration) * 100}%` }}
-                ></div>
-              </div>
-              
-              {/* Time indicators */}
-              <div className="flex justify-between mt-2 text-[10px] text-white/70 font-mono">
-                <div>{formatTime(currentTime)}</div>
-                <div>{formatTime(videoDuration)}</div>
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={toggleMute} 
+                  className="bg-black/60 hover:bg-black/80 backdrop-blur-md text-white/90 p-2 rounded-full transition-all duration-300 border border-white/10 shadow-sm hover:scale-105"
+                >
+                  {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                </button>
+                <button
+                  onClick={toggleFullscreen}
+                  className="bg-black/60 hover:bg-black/80 backdrop-blur-md text-white/90 p-2 rounded-full transition-all duration-300 border border-white/10 shadow-sm hover:scale-105"
+                >
+                  {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+                </button>
               </div>
             </div>
           </div>
+          
+          {/* Bottom controls with premium timeline */}
+          <div className={`absolute ${isMobile ? 'bottom-[3%]' : 'bottom-[8%]'} left-0 right-0 pointer-events-auto transform translate-y-[-14px]`}>
+            {/* Sophisticated progress bar */}
+            <div className="px-4 sm:px-6">
+              <div className="relative">
+                {/* Background track */}
+                <div className="h-1 bg-white/10 overflow-hidden rounded-full backdrop-blur-sm">
+                  {/* Progress indicator with gradient */}
+                  <div 
+                    className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 transition-all duration-300 ease-linear rounded-full"
+                    style={{ width: `${(currentTime / videoDuration) * 100}%` }}
+                  ></div>
+                </div>
+                
+                {/* Time indicators */}
+                <div className="flex justify-between mt-2 text-[10px] text-white/70 font-mono">
+                  <div>{formatTime(currentTime)}</div>
+                  <div>{formatTime(videoDuration)}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
       
-      {/* CTA section with elegant animation and minimization capabilities */}
-      {ctaVisible && (
-        <div className={`absolute left-0 right-0 z-20 transition-all duration-500 ease-in-out ${ctaMinimized ? 'bottom-0' : 'bottom-[8%]'}`}>
+      {/* CTA section - only show on desktop */}
+      {ctaVisible && !isMobile && (
+        <div className={`absolute left-0 right-0 z-20 transition-all duration-500 ease-in-out ${ctaMinimized ? 'bottom-0' : `bottom-[8%]`}`}>
           {/* Minimized state tab */}
           {ctaMinimized && (
             <div className="absolute left-1/2 -translate-x-1/2 top-0 transform -translate-y-full">

@@ -35,6 +35,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Improve touch experience on mobile */
+  @media (max-width: 767px) {
+    button, 
+    [role="button"],
+    .tap-highlight-none {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
 }
 
 .chat-message {
@@ -76,6 +84,24 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+  
+  /* Aspect ratio utility classes */
+  .aspect-cinema {
+    aspect-ratio: 21/9;
+  }
+  
+  .aspect-ultrawide {
+    aspect-ratio: 32/9;
+  }
+  
+  /* Mobile-specific enhancements */
+  .mobile-safe-area-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  
+  .mobile-safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 }
 

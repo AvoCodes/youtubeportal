@@ -4,6 +4,7 @@ import VideoPlayer from '../VideoPlayer';
 import { Progress } from '@/components/ui/progress';
 import { Users, ThumbsUp, Zap, Play } from 'lucide-react';
 import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface WebinarVideoProps {
   currentTime: number;
@@ -26,6 +27,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const videoDuration = 5263; // 1 hour, 27 minutes, 43 seconds in seconds
+  const isMobile = useIsMobile();
   
   // Simulate video loading
   useEffect(() => {
@@ -37,10 +39,10 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
   }, []);
 
   return (
-    <div className="max-w-full w-full mb-8 relative rounded-xl overflow-hidden shadow-2xl aspect-video bg-black">
-      {/* Cinematic letterbox effect */}
-      <div className="absolute top-0 left-0 w-full h-[5%] bg-black z-20"></div>
-      <div className="absolute bottom-0 left-0 w-full h-[5%] bg-black z-20"></div>
+    <div className="max-w-full w-full mb-4 md:mb-8 relative rounded-xl overflow-hidden shadow-2xl aspect-video bg-black">
+      {/* Cinematic letterbox effect - reduced on mobile */}
+      <div className={`absolute top-0 left-0 w-full ${isMobile ? 'h-[2%]' : 'h-[5%]'} bg-black z-20`}></div>
+      <div className={`absolute bottom-0 left-0 w-full ${isMobile ? 'h-[2%]' : 'h-[5%]'} bg-black z-20`}></div>
       
       {/* Dramatic lighting effects */}
       <div className="absolute inset-0 bg-gradient-to-r from-rose-600/30 to-blue-700/30 mix-blend-overlay pointer-events-none z-10"></div>
@@ -79,7 +81,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
         )}
         
         {/* Improved progress bar */}
-        <div className="absolute bottom-[5%] left-0 right-0 transform translate-y-[-10px] h-2 z-30 px-4">
+        <div className={`absolute ${isMobile ? 'bottom-[2%]' : 'bottom-[5%]'} left-0 right-0 transform translate-y-[-10px] h-2 z-30 px-4`}>
           <Progress 
             value={(currentTime / videoDuration) * 100} 
             className="h-full rounded-full overflow-hidden" 
@@ -87,8 +89,8 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
           />
         </div>
         
-        {/* Live indicator and viewer count overlay */}
-        <div className="absolute top-[5%] left-0 transform translate-y-[10px] px-4 flex items-center gap-3 z-30">
+        {/* Live indicator and viewer count overlay - adjusted for mobile */}
+        <div className={`absolute ${isMobile ? 'top-[2%]' : 'top-[5%]'} left-0 transform translate-y-[10px] px-4 flex items-center gap-3 z-30`}>
           <div className="bg-red-600/90 backdrop-blur-sm rounded-full px-3 py-1 text-white text-xs font-medium flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
             LIVE
