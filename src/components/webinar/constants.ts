@@ -40765,7 +40765,7 @@ export const NEW_ATTENDEES = [
     Role: "Attendee",
     Message: "PEACE DAN!!!",
     Mode: "Text"
-  },
+  }
 ];
 
 // Milestone offers that appear at strategic points in the webinar
