@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
@@ -209,11 +208,33 @@ const Index = () => {
             wistiaId="1a1gto8igi"
             onTimeUpdate={handleTimeUpdate}
           />
+          
+          {/* Progress bar moved between video and tags for mobile */}
+          {isMobile && !loading && (
+            <div className="bg-black pt-2 pb-0.5 px-2">
+              <div className="relative">
+                {/* Background track */}
+                <div className="h-1.5 bg-white/10 overflow-hidden rounded-full backdrop-blur-sm">
+                  {/* Progress indicator with gradient */}
+                  <div 
+                    className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 transition-all duration-300 ease-linear rounded-full"
+                    style={{ width: `${(currentTime / videoDuration) * 100}%` }}
+                  ></div>
+                </div>
+                
+                {/* Time indicators */}
+                <div className="flex justify-between mt-1 text-[10px] text-white/70 font-mono">
+                  <div>{formatTime(currentTime)}</div>
+                  <div>{formatTime(videoDuration)}</div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Mobile-optimized content below video - Only show at the end of the webinar */}
         {isMobile && !loading && ctaVisible && (
-          <div className="flex-1 overflow-y-auto px-3 pt-3 pb-16 bg-black">
+          <div className="flex-1 overflow-y-auto px-3 pt-1 pb-16 bg-black">
             <WebinarTags />
             
             {/* Mobile-friendly CTA that's visible only at the end of the webinar */}
@@ -255,7 +276,7 @@ const Index = () => {
         
         {/* Show WebinarTags for mobile even when CTA is not visible */}
         {isMobile && !loading && !ctaVisible && (
-          <div className="px-3 pt-3 bg-black">
+          <div className="px-3 pt-1 bg-black">
             <WebinarTags />
           </div>
         )}
@@ -344,28 +365,30 @@ const Index = () => {
             </div>
           </div>
           
-          {/* Bottom controls with premium timeline */}
-          <div className={`absolute ${isMobile ? 'bottom-[3%]' : 'bottom-[8%]'} left-0 right-0 pointer-events-auto transform translate-y-[-14px]`}>
-            {/* Sophisticated progress bar */}
-            <div className="px-4 sm:px-6">
-              <div className="relative">
-                {/* Background track */}
-                <div className="h-1 bg-white/10 overflow-hidden rounded-full backdrop-blur-sm">
-                  {/* Progress indicator with gradient */}
-                  <div 
-                    className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 transition-all duration-300 ease-linear rounded-full"
-                    style={{ width: `${(currentTime / videoDuration) * 100}%` }}
-                  ></div>
-                </div>
-                
-                {/* Time indicators */}
-                <div className="flex justify-between mt-2 text-[10px] text-white/70 font-mono">
-                  <div>{formatTime(currentTime)}</div>
-                  <div>{formatTime(videoDuration)}</div>
+          {/* Bottom controls with premium timeline - only show on desktop */}
+          {!isMobile && (
+            <div className={`absolute ${isMobile ? 'bottom-[3%]' : 'bottom-[8%]'} left-0 right-0 pointer-events-auto transform translate-y-[-14px]`}>
+              {/* Sophisticated progress bar */}
+              <div className="px-4 sm:px-6">
+                <div className="relative">
+                  {/* Background track */}
+                  <div className="h-1 bg-white/10 overflow-hidden rounded-full backdrop-blur-sm">
+                    {/* Progress indicator with gradient */}
+                    <div 
+                      className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 transition-all duration-300 ease-linear rounded-full"
+                      style={{ width: `${(currentTime / videoDuration) * 100}%` }}
+                    ></div>
+                  </div>
+                  
+                  {/* Time indicators */}
+                  <div className="flex justify-between mt-2 text-[10px] text-white/70 font-mono">
+                    <div>{formatTime(currentTime)}</div>
+                    <div>{formatTime(videoDuration)}</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
       
