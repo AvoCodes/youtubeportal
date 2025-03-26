@@ -34,15 +34,15 @@ const LiveChat: React.FC<LiveChatProps> = ({
     <div className="h-full flex flex-col bg-gray-50 relative">
       {/* Chat messages */}
       <div className="flex-1 overflow-hidden">
-        <ScrollArea className="h-full pb-16">
-          <div className="space-y-4 p-4 pb-20">
+        <ScrollArea className="h-full">
+          <div className="space-y-4 p-4 pb-16">
             {messages.map((msg) => (
-              <div key={msg.id} className="flex items-start gap-3 mb-5 max-w-full">
-                <Avatar className="w-10 h-10 flex-shrink-0">
+              <div key={msg.id} className="flex items-start gap-3 mb-4 max-w-full">
+                <Avatar className="w-8 h-8 flex-shrink-0">
                   {msg.avatar ? (
                     <AvatarImage src={msg.avatar} alt={msg.author} />
                   ) : (
-                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-xs">
                       {msg.author[0]}
                     </AvatarFallback>
                   )}
@@ -55,11 +55,11 @@ const LiveChat: React.FC<LiveChatProps> = ({
                   <p className="text-sm text-gray-700 break-words">{msg.message}</p>
                   <div className="flex items-center gap-4 mt-1">
                     <button className="flex items-center gap-1 text-gray-600 hover:text-blue-600">
-                      <ThumbsUp className="w-4 h-4" />
+                      <ThumbsUp className="w-3 h-3" />
                       <span className="text-xs">{msg.likes || 0}</span>
                     </button>
                     <button className="flex items-center text-gray-600 hover:text-blue-600">
-                      <ThumbsDown className="w-4 h-4" />
+                      <ThumbsDown className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
@@ -71,9 +71,9 @@ const LiveChat: React.FC<LiveChatProps> = ({
       
       {/* Chat input - fixed at bottom */}
       <div className="absolute bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200">
-        <div className="flex items-center gap-3">
-          <Avatar className="w-10 h-10 flex-shrink-0">
-            <AvatarFallback className="bg-blue-600 text-white">
+        <div className="flex items-center gap-2">
+          <Avatar className="w-8 h-8 flex-shrink-0">
+            <AvatarFallback className="bg-blue-600 text-white text-xs">
               A
             </AvatarFallback>
           </Avatar>
