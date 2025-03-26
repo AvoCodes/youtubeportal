@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import WebinarTags from '../components/webinar/WebinarTags';
 import WebinarHeader from '../components/webinar/WebinarHeader';
@@ -7,52 +6,7 @@ import WebinarOffer from '../components/webinar/WebinarOffer';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
 import { PaymentOption } from '../components/CTAButton';
-
-// Define local constants instead of importing from the broken constants.ts file
-const NEW_ATTENDEES = [
-  { name: "Alex Johnson", time: 120 },
-  { name: "Maria Garcia", time: 240 },
-  { name: "James Smith", time: 480 },
-  { name: "Sarah Wilson", time: 720 },
-  { name: "David Thompson", time: 960 },
-  { name: "Linda Martinez", time: 1200 },
-  { name: "Michael Brown", time: 1500 },
-  { name: "Emily Davis", time: 1800 },
-  { name: "Robert Taylor", time: 2100 },
-  { name: "Jennifer Anderson", time: 2400 },
-  { name: "Christopher Lee", time: 2700 },
-  { name: "Jessica White", time: 3000 },
-  { name: "Daniel Harris", time: 3300 },
-  { name: "Amanda Martin", time: 3600 },
-  { name: "Matthew Clark", time: 3900 },
-  { name: "Nicole Lewis", time: 4200 },
-  { name: "Andrew Jackson", time: 4500 },
-  { name: "Stephanie Moore", time: 4800 }
-];
-
-const MILESTONES = [
-  {
-    id: "early-bird",
-    title: "Early Action Bonus",
-    description: "Special bonus for early action takers",
-    time: 2400,
-    discount: 15
-  },
-  {
-    id: "bonus-module",
-    title: "Bonus AI Module",
-    description: "Advanced AI script generation tools included",
-    time: 3600,
-    discount: 0
-  },
-  {
-    id: "special-offer",
-    title: "Limited Time Offer",
-    description: "Act now before this special pricing expires",
-    time: 4800,
-    discount: 20
-  }
-];
+import { NEW_ATTENDEES, MILESTONES } from '../components/webinar/constants';
 
 const Index = () => {
   const [currentTime, setCurrentTime] = useState(0);
