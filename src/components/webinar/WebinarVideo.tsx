@@ -5,7 +5,7 @@ import { Progress } from '@/components/ui/progress';
 import { Users, ThumbsUp, Zap, Play, MessageSquare, X } from 'lucide-react';
 import { Skeleton } from "@/components/ui/skeleton";
 import LiveChat from '../LiveChat';
-import { CHAT_MESSAGES } from './constants';
+import { loadChatFromCsv } from '@/utils/chatImporter';
 
 interface WebinarVideoProps {
   currentTime: number;
@@ -28,32 +28,48 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [visibleChatMessages, setVisibleChatMessages] = useState<any[]>([]);
+  const [allChatMessages, setAllChatMessages] = useState<any[]>([]);
   const [chatExpanded, setChatExpanded] = useState(false);
+  const [isLoadingChat, setIsLoadingChat] = useState(true);
   const videoDuration = 5263; // 1 hour, 27 minutes, 43 seconds in seconds
+  
+  // Load chat messages from CSV file
+  useEffect(() => {
+    const fetchChatMessages = async () => {
+      try {
+        setIsLoadingChat(true);
+        const messages = await loadChatFromCsv('/chat_log.csv');
+        console.log(`Loaded ${messages.length} chat messages`);
+        setAllChatMessages(messages);
+      } catch (error) {
+        console.error('Error loading chat messages:', error);
+      } finally {
+        setIsLoadingChat(false);
+      }
+    };
+    
+    fetchChatMessages();
+  }, []);
   
   // Filter chat messages based on current time
   useEffect(() => {
-    const filteredMessages = CHAT_MESSAGES
+    if (allChatMessages.length === 0) return;
+    
+    const filteredMessages = allChatMessages
       .filter(msg => {
         // Convert HH:MM:SS to seconds for comparison with currentTime
         const totalSeconds = (msg.hour * 3600) + (msg.minute * 60) + msg.second;
         return totalSeconds <= currentTime;
       })
+      .slice(-100) // Only show the last 100 messages to prevent performance issues
       .map((msg, index) => ({
-        id: index + 1,
-        name: msg.name,
-        role: msg.role,
-        message: msg.message,
-        hour: msg.hour,
-        minute: msg.minute,
-        second: msg.second,
-        mode: msg.mode,
-        likes: Math.floor(Math.random() * 10),
+        ...msg,
+        likes: msg.likes || Math.floor(Math.random() * 10),
         timeAgo: getTimeAgo(msg)
       }));
     
     setVisibleChatMessages(filteredMessages);
-  }, [currentTime]);
+  }, [currentTime, allChatMessages]);
 
   // Function to generate relative time for chat messages
   const getTimeAgo = (msg: any) => {
@@ -142,11 +158,18 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
       {chatExpanded && (
         <div className="w-full border-t border-gray-200 rounded-b-xl overflow-hidden">
           <div className="h-80">
-            <LiveChat 
-              messages={visibleChatMessages} 
-              currentTime={currentTime}
-              onLike={onLike}
-            />
+            {isLoadingChat ? (
+              <div className="h-full flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <span className="ml-2 text-gray-500">Loading chat messages...</span>
+              </div>
+            ) : (
+              <LiveChat 
+                messages={visibleChatMessages} 
+                currentTime={currentTime}
+                onLike={onLike}
+              />
+            )}
           </div>
         </div>
       )}

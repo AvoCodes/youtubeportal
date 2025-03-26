@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import WebinarTags from '../components/webinar/WebinarTags';
 import WebinarHeader from '../components/webinar/WebinarHeader';
@@ -6,7 +5,7 @@ import WebinarVideo from '../components/webinar/WebinarVideo';
 import WebinarOffer from '../components/webinar/WebinarOffer';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
-import { NEW_ATTENDEES, MILESTONES, CHAT_MESSAGES } from '../components/webinar/constants';
+import { NEW_ATTENDEES, MILESTONES } from '../components/webinar/constants';
 import { PaymentOption } from '../components/CTAButton';
 
 const Index = () => {

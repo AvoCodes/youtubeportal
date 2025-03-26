@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ThumbsDown, ThumbsUp, Send } from 'lucide-react';
+import { ThumbsDown, ThumbsUp, Send, Clock } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -30,7 +30,7 @@ interface LiveChatProps {
 }
 
 const LiveChat: React.FC<LiveChatProps> = ({ 
-  messages, 
+  messages = [], // Provide default empty array
   onLike,
   hasLiked = false,
   onClose,
@@ -51,6 +51,11 @@ const LiveChat: React.FC<LiveChatProps> = ({
     }
   };
 
+  // Format time for display
+  const formatTime = (hour: number, minute: number, second: number) => {
+    return `${hour}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div className="h-full flex flex-col bg-gray-50 rounded-b-xl border border-gray-200 shadow-sm">
       {/* Chat header */}
@@ -62,40 +67,53 @@ const LiveChat: React.FC<LiveChatProps> = ({
       <div className="flex-1 overflow-hidden">
         <ScrollArea className="h-full">
           <div className="space-y-4 p-4 pb-16">
-            {messages.map((msg) => (
-              <div key={msg.id} className="flex items-start gap-3 mb-4 max-w-full">
-                <Avatar className="w-8 h-8 flex-shrink-0">
-                  {msg.avatar ? (
-                    <AvatarImage src={msg.avatar} alt={msg.name} />
-                  ) : (
-                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-xs">
-                      {msg.name[0]}
-                    </AvatarFallback>
-                  )}
-                </Avatar>
-                <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-medium text-sm text-gray-900">{msg.name}</span>
-                    {msg.role && (
-                      <span className="text-xs px-1.5 py-0.5 bg-blue-100 text-blue-800 rounded-full">
-                        {msg.role}
-                      </span>
+            {messages.length > 0 ? (
+              messages.map((msg) => (
+                <div key={msg.id} className="flex items-start gap-3 mb-4 max-w-full chat-message">
+                  <Avatar className="w-8 h-8 flex-shrink-0">
+                    {msg.avatar ? (
+                      <AvatarImage src={msg.avatar} alt={msg.name} />
+                    ) : (
+                      <AvatarFallback className={`bg-gradient-to-br ${msg.role?.toLowerCase().includes('moderator') ? 'from-blue-500 to-purple-600' : 'from-green-400 to-cyan-600'} text-white text-xs`}>
+                        {msg.name && msg.name.length > 0 ? msg.name[0].toUpperCase() : '?'}
+                      </AvatarFallback>
                     )}
-                    <span className="text-gray-500 text-xs">{msg.timeAgo || `${msg.hour}:${msg.minute.toString().padStart(2, '0')}`}</span>
-                  </div>
-                  <p className="text-sm text-gray-700 break-words">{msg.message}</p>
-                  <div className="flex items-center gap-4 mt-1">
-                    <button className="flex items-center gap-1 text-gray-600 hover:text-blue-600">
-                      <ThumbsUp className="w-3 h-3" />
-                      <span className="text-xs">{msg.likes || 0}</span>
-                    </button>
-                    <button className="flex items-center text-gray-600 hover:text-blue-600">
-                      <ThumbsDown className="w-3 h-3" />
-                    </button>
+                  </Avatar>
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium text-sm text-gray-900">{msg.name}</span>
+                      {msg.role && (
+                        <span className={`text-xs px-1.5 py-0.5 rounded-full ${
+                          msg.role.toLowerCase().includes('moderator') 
+                            ? 'bg-blue-100 text-blue-800' 
+                            : msg.role.toLowerCase().includes('host') 
+                              ? 'bg-purple-100 text-purple-800' 
+                              : 'bg-gray-100 text-gray-800'
+                        }`}>
+                          {msg.role}
+                        </span>
+                      )}
+                      <span className="text-gray-500 text-xs flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {msg.timeAgo || formatTime(msg.hour, msg.minute, msg.second)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-700 break-words">{msg.message}</p>
+                    <div className="flex items-center gap-4 mt-1">
+                      <button className="flex items-center gap-1 text-gray-600 hover:text-blue-600">
+                        <ThumbsUp className="w-3 h-3" />
+                        <span className="text-xs">{msg.likes || 0}</span>
+                      </button>
+                      <button className="flex items-center text-gray-600 hover:text-blue-600">
+                        <ThumbsDown className="w-3 h-3" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <div className="text-center text-gray-500 py-6">No messages yet</div>
+            )}
           </div>
         </ScrollArea>
       </div>
