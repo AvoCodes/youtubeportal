@@ -40768,21 +40768,3 @@ export const NEW_ATTENDEES = [
     ]
   }
 ];
-
-// Milestone offers that appear at strategic points in the webinar
-export const MILESTONES = [
-  {
-    id: 1,
-    time: 2160, // 36 minutes
-    title: "Early Bird Bonus",
-    description: "First 50 to join get 3 exclusive masterclass sessions ($997 value)",
-    highlight: "Limited availability!"
-  },
-  {
-    id: 2,
-    time: 4320, // 72 minutes
-    title: "Last Chance",
-    description: "Final opportunity to join at this special webinar-only rate",
-    highlight: "Timer ending soon!"
-  }
-];
