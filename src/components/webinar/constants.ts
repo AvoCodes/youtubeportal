@@ -1,51 +1,3 @@
-// Poll data for interactive webinar engagement
-export const POLLS = [
-  {
-    id: 1,
-    time: 600,
-    question: "What's your main goal for attending this webinar?",
-    options: [
-      "Learn new strategies",
-      "Find new income sources",
-      "See real examples of success",
-      "Connect with like-minded people"
-    ]
-  },
-  {
-    id: 2,
-    time: 1200,
-    question: "What's been your biggest obstacle so far?",
-    options: [
-      "Lack of knowledge",
-      "Limited time",
-      "Financial constraints",
-      "Fear of failure"
-    ]
-  },
-  {
-    id: 3,
-    time: 1800,
-    question: "Which strategy sounds most appealing to you?",
-    options: [
-      "Automation tools",
-      "Content creation",
-      "Targeted advertising",
-      "Community building"
-    ]
-  },
-  {
-    id: 4,
-    time: 2400,
-    question: "Are you ready to take action on what you've learned today?",
-    options: [
-      "Yes, starting today!",
-      "Yes, but need to plan first",
-      "Maybe, still considering",
-      "Need more information"
-    ]
-  }
-];
-
 // Chat messages for simulated live interaction with the new format
 // Hour,Minute,Second,Name,Role,Message,Mode
 export const NEW_ATTENDEES = [
@@ -40766,5 +40718,4 @@ export const NEW_ATTENDEES = [
     Message: "PEACE DAN!!!",
     Mode: "Text"
   }
-  ]
 ];
