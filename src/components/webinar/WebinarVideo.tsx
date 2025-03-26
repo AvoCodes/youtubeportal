@@ -33,16 +33,68 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
   const [isLoadingChat, setIsLoadingChat] = useState(true);
   const videoDuration = 5263; // 1 hour, 27 minutes, 43 seconds in seconds
   
-  // Load chat messages from CSV file
+  // Create default chat messages if CSV loading fails
+  const createDefaultChatMessages = () => {
+    return [
+      {
+        id: 1,
+        name: "Daniel Bitton",
+        role: "Host",
+        message: "Welcome everyone to the YouTube Portal webinar!",
+        hour: 0,
+        minute: 0,
+        second: 10,
+        likes: 15
+      },
+      {
+        id: 2,
+        name: "Sarah",
+        message: "Excited to be here! Looking forward to learning more about AI shorts.",
+        hour: 0,
+        minute: 0,
+        second: 35,
+        likes: 7
+      },
+      {
+        id: 3,
+        name: "Jake",
+        message: "Is this strategy really working in 2023?",
+        hour: 0,
+        minute: 1,
+        second: 15,
+        likes: 2
+      },
+      {
+        id: 4,
+        name: "ModeratorAlex",
+        role: "Moderator",
+        message: "Yes Jake! The strategy has been updated for 2023 algorithms.",
+        hour: 0,
+        minute: 1,
+        second: 45,
+        likes: 10
+      }
+    ];
+  };
+  
+  // Load chat messages from CSV file or use fallback
   useEffect(() => {
     const fetchChatMessages = async () => {
       try {
         setIsLoadingChat(true);
-        const messages = await loadChatFromCsv('/chat_log.csv');
+        let messages = await loadChatFromCsv('/chat_log.csv');
         console.log(`Loaded ${messages.length} chat messages`);
+        
+        // If no messages were loaded or an error occurred, use default messages
+        if (!messages || messages.length === 0) {
+          console.log('Using fallback chat messages');
+          messages = createDefaultChatMessages();
+        }
+        
         setAllChatMessages(messages);
       } catch (error) {
         console.error('Error loading chat messages:', error);
+        setAllChatMessages(createDefaultChatMessages());
       } finally {
         setIsLoadingChat(false);
       }
@@ -84,7 +136,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 2000); // Reduced loading time for better UX
     
     return () => clearTimeout(timer);
   }, []);
