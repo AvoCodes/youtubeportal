@@ -40765,6 +40765,6 @@ export const NEW_ATTENDEES = [
     Role: "Attendee",
     Message: "PEACE DAN!!!",
     Mode: "Text"
-    ]
   }
+  ]
 ];
