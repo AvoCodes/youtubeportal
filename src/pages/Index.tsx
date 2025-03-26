@@ -91,8 +91,10 @@ const Index = () => {
         setCountdownActive(true);
       }
       
-      // Show CTA when appropriate
-      if (currentTime >= 2040 && !ctaVisible) {
+      // Show CTA when appropriate - only at the end portion of the webinar
+      // Adjusted to show CTA much later in the webinar (around 75% through)
+      const ctaShowTime = videoDuration * 0.75; // Show at 75% of video duration
+      if (currentTime >= ctaShowTime && !ctaVisible) {
         setCTAVisible(true);
         // Automatically minimize CTA after a period to avoid distraction
         setTimeout(() => {
@@ -102,7 +104,7 @@ const Index = () => {
     };
     
     handleTimeBasedEvents();
-  }, [currentTime, ctaVisible]);
+  }, [currentTime, ctaVisible, videoDuration]);
 
   useEffect(() => {
     let timer: number;
@@ -209,12 +211,12 @@ const Index = () => {
           />
         </div>
 
-        {/* Mobile-optimized content below video */}
-        {isMobile && !loading && (
+        {/* Mobile-optimized content below video - Only show at the end of the webinar */}
+        {isMobile && !loading && ctaVisible && (
           <div className="flex-1 overflow-y-auto px-3 pt-3 pb-16 bg-black">
             <WebinarTags />
             
-            {/* Mobile-friendly CTA that's always visible */}
+            {/* Mobile-friendly CTA that's visible only at the end of the webinar */}
             <div className="bg-gradient-to-b from-gray-900 to-black rounded-xl p-4 mb-5 border border-gray-800">
               <div className="space-y-3">
                 <h3 className="text-white text-lg font-semibold tracking-tight">AI YouTube Shorts Blueprint</h3>
@@ -248,6 +250,13 @@ const Index = () => {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+        
+        {/* Show WebinarTags for mobile even when CTA is not visible */}
+        {isMobile && !loading && !ctaVisible && (
+          <div className="px-3 pt-3 bg-black">
+            <WebinarTags />
           </div>
         )}
       </div>
@@ -360,7 +369,7 @@ const Index = () => {
         </div>
       )}
       
-      {/* CTA section - only show on desktop */}
+      {/* CTA section - only show on desktop and when appropriate */}
       {ctaVisible && !isMobile && (
         <div className={`absolute left-0 right-0 z-20 transition-all duration-500 ease-in-out ${ctaMinimized ? 'bottom-0' : `bottom-[8%]`}`}>
           {/* Minimized state tab */}
