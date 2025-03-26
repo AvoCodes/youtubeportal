@@ -15,7 +15,6 @@ const Index = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState({ title: "", message: "" });
   const [showMilestoneOffer, setShowMilestoneOffer] = useState(false);
-  const [currentMilestone, setCurrentMilestone] = useState(MILESTONES[0]);
   const [seatsRemaining, setSeatsRemaining] = useState(37);
   const [countdownActive, setCountdownActive] = useState(false);
   const [countdown, setCountdown] = useState(600);
