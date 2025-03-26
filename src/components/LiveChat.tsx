@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MessagesSquare, ThumbsDown, ThumbsUp, Users, X } from 'lucide-react';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 
@@ -34,38 +34,8 @@ const LiveChat: React.FC<LiveChatProps> = ({
 }) => {
   return (
     <div className="h-full rounded-lg flex flex-col bg-gray-50">
-      {/* Viewer count and likes section */}
-      <div className="p-4 border-b border-gray-200 bg-white">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-blue-600" />
-            <span className="text-sm font-medium">{viewerCount.toLocaleString()} watching now</span>
-          </div>
-          <button 
-            className={`flex items-center gap-2 ${hasLiked ? 'text-blue-600' : 'text-gray-700'}`}
-            onClick={onLike}
-          >
-            <ThumbsUp className="w-4 h-4" />
-            <span className="text-sm">{likesCount.toLocaleString()}</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="p-4 flex-1 flex flex-col">
-        <div className="flex items-start gap-3 mb-8">
-          <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-lg">
-            A
-          </div>
-          <div className="flex-1">
-            <input
-              type="text"
-              placeholder="Add a comment..."
-              className="w-full bg-white border-b border-gray-300 pb-1 focus:outline-none focus:border-blue-500 placeholder:text-gray-500 text-gray-900"
-            />
-          </div>
-        </div>
-        
-        <ScrollArea className="flex-1 pr-4">
+      <div className="flex-1 flex flex-col p-4">
+        <ScrollArea className="flex-1 pr-4 mb-4">
           <div className="space-y-6">
             {messages.map((msg) => (
               <div key={msg.id} className="flex items-start gap-3">
@@ -99,6 +69,20 @@ const LiveChat: React.FC<LiveChatProps> = ({
             ))}
           </div>
         </ScrollArea>
+        
+        {/* Chat input - moved to bottom */}
+        <div className="flex items-start gap-3 mt-2">
+          <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-lg">
+            A
+          </div>
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Message in chat..."
+              className="w-full bg-white border-b border-gray-300 pb-1 focus:outline-none focus:border-blue-500 placeholder:text-gray-500 text-gray-900"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
