@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CheckCircle, ArrowUpRight } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
@@ -25,6 +25,24 @@ const WebinarMilestoneDialog: React.FC<WebinarMilestoneDialogProps> = ({
   countdown,
   onClose
 }) => {
+  const [localCountdown, setLocalCountdown] = useState(countdown);
+
+  useEffect(() => {
+    setLocalCountdown(countdown);
+    
+    const timer = setInterval(() => {
+      setLocalCountdown(prev => {
+        if (prev <= 0) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, [countdown]);
+
   const formatCountdown = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -91,7 +109,7 @@ const WebinarMilestoneDialog: React.FC<WebinarMilestoneDialogProps> = ({
               <div className="space-y-4">
                 <p>Don't miss out on this special offer!</p>
                 <div className="bg-amber-50 text-amber-700 p-4 rounded-lg">
-                  <p className="font-medium">Offer ends in: {formatCountdown(countdown)}</p>
+                  <p className="font-medium">Offer ends in: {formatCountdown(localCountdown)}</p>
                 </div>
               </div>
             )}
