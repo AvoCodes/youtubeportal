@@ -34,8 +34,8 @@ const LiveChat: React.FC<LiveChatProps> = ({
     <div className="h-full flex flex-col bg-gray-50 relative">
       {/* Chat messages */}
       <div className="flex-1 overflow-hidden">
-        <ScrollArea className="h-[calc(100%-60px)] pb-16">
-          <div className="space-y-4 p-4">
+        <ScrollArea className="h-full pb-16">
+          <div className="space-y-4 p-4 pb-20">
             {messages.map((msg) => (
               <div key={msg.id} className="flex items-start gap-3 mb-5 max-w-full">
                 <Avatar className="w-10 h-10 flex-shrink-0">

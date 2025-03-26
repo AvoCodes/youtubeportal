@@ -127,7 +127,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
           className={`md:border-l border-gray-200 transition-all duration-300 ease-in-out md:absolute md:right-0 md:top-0 md:bottom-0 z-20 ${
             chatExpanded ? 'md:w-1/4 max-w-sm' : 'md:w-0 md:opacity-0 md:overflow-hidden'
           }`}
-          style={{ height: chatExpanded ? 'calc(100% - 48px)' : '0' }}
+          style={{ height: chatExpanded ? 'calc(100%)' : '0' }}
         >
           {chatExpanded && (
             <div className="h-full">
@@ -140,7 +140,7 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
           )}
         </div>
 
-        {/* Chat toggle button - visible on desktop */}
+        {/* Chat toggle button - positioned at the top right */}
         <button 
           onClick={toggleChat}
           className="hidden md:flex items-center justify-center p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-l-md absolute right-0 top-4 z-30 transition-all duration-300 shadow-md"
@@ -148,32 +148,14 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
         >
           {chatExpanded ? <X className="w-4 h-4" /> : <MessageSquare className="w-4 h-4" />}
         </button>
-      </div>
-      
-      {/* Bottom stats bar */}
-      <div className="bg-white py-3 px-4 border-t border-slate-100">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-blue-600" />
-            <span className="font-medium text-sm sm:text-base">{viewerCount.toLocaleString()} watching</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <ThumbsUp 
-              className="w-4 h-4 text-blue-600 cursor-pointer" 
-              onClick={onLike}
-            />
-            <span className="font-medium text-sm sm:text-base">{likesCount.toLocaleString()}</span>
-            
-            {/* Chat toggle button - visible on mobile */}
-            <button 
-              onClick={toggleChat}
-              className="md:hidden flex items-center gap-1 text-blue-600"
-            >
-              <MessageSquare className="w-4 h-4" />
-              <span className="text-sm">{visibleChatMessages.length}</span>
-            </button>
-          </div>
-        </div>
+        
+        {/* Mobile chat toggle button - now floating over the video */}
+        <button 
+          onClick={toggleChat}
+          className="md:hidden flex items-center justify-center p-2 bg-blue-500 text-white rounded-full absolute bottom-8 right-4 z-30 shadow-md"
+        >
+          <MessageSquare className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );
