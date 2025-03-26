@@ -74,8 +74,8 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 to-red-600 z-20"></div>
       
       <div className="flex flex-col md:flex-row relative">
-        {/* Video player - now takes more space when chat is open */}
-        <div className={`relative z-10 flex-1 ${chatExpanded ? 'md:w-3/4' : 'w-full'}`}>
+        {/* Video player area */}
+        <div className={`relative z-10 ${chatExpanded ? 'md:w-3/4' : 'w-full'}`}>
           <VideoPlayer
             wistiaId="1a1gto8igi"
             onTimeUpdate={onTimeUpdate}
@@ -122,17 +122,18 @@ const WebinarVideo: React.FC<WebinarVideoProps> = ({
           )}
         </div>
         
-        {/* Live Chat - With proper positioning to avoid overlaps */}
-        <div className={`md:border-l border-gray-200 bg-white transition-all duration-300 ease-in-out md:absolute md:right-0 md:top-0 md:bottom-0 md:h-full z-20 ${
-          chatExpanded ? 'md:w-1/4 max-w-xs relative' : 'md:w-0 md:opacity-0 md:overflow-hidden'
-        }`}>
+        {/* Live Chat - improved positioning */}
+        <div 
+          className={`md:border-l border-gray-200 transition-all duration-300 ease-in-out md:absolute md:right-0 md:top-0 md:bottom-0 z-20 ${
+            chatExpanded ? 'md:w-1/4 max-w-sm' : 'md:w-0 md:opacity-0 md:overflow-hidden'
+          }`}
+          style={{ height: chatExpanded ? 'calc(100% - 48px)' : '0' }}
+        >
           {chatExpanded && (
-            <div className="h-full relative">
+            <div className="h-full">
               <LiveChat 
                 messages={visibleChatMessages} 
                 currentTime={currentTime}
-                viewerCount={viewerCount}
-                likesCount={likesCount}
                 onLike={onLike}
               />
             </div>

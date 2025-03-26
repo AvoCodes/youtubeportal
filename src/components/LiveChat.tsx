@@ -2,7 +2,7 @@
 import React from 'react';
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export interface ChatMessage {
   id: number;
@@ -26,33 +26,34 @@ interface LiveChatProps {
 
 const LiveChat: React.FC<LiveChatProps> = ({ 
   messages, 
-  viewerCount = 0,
-  likesCount = 0,
   onLike,
   hasLiked = false,
   onClose
 }) => {
   return (
-    <div className="h-full rounded-lg flex flex-col bg-gray-50">
-      <div className="flex-1 flex flex-col p-4 pb-14">
-        <ScrollArea className="flex-1 pr-4 mb-4">
-          <div className="space-y-6">
+    <div className="h-full flex flex-col bg-gray-50 relative">
+      {/* Chat messages */}
+      <div className="flex-1 overflow-hidden">
+        <ScrollArea className="h-[calc(100%-60px)] pb-16">
+          <div className="space-y-4 p-4">
             {messages.map((msg) => (
-              <div key={msg.id} className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center overflow-hidden flex-shrink-0 text-white">
+              <div key={msg.id} className="flex items-start gap-3 mb-5 max-w-full">
+                <Avatar className="w-10 h-10 flex-shrink-0">
                   {msg.avatar ? (
-                    <img src={msg.avatar} alt={msg.author} className="w-full h-full object-cover" />
+                    <AvatarImage src={msg.avatar} alt={msg.author} />
                   ) : (
-                    <span className="text-lg">{msg.author[0]}</span>
+                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+                      {msg.author[0]}
+                    </AvatarFallback>
                   )}
-                </div>
-                <div className="flex-1 space-y-1">
-                  <div className="flex items-center gap-2">
+                </Avatar>
+                <div className="flex-1 min-w-0 space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-medium text-sm text-gray-900">{msg.author}</span>
-                    <span className="text-gray-500 text-sm">{msg.timeAgo || '7 days ago'}</span>
+                    <span className="text-gray-500 text-xs">{msg.timeAgo || '7 days ago'}</span>
                   </div>
-                  <p className="text-sm text-gray-700">{msg.message}</p>
-                  <div className="flex items-center gap-4 mt-2">
+                  <p className="text-sm text-gray-700 break-words">{msg.message}</p>
+                  <div className="flex items-center gap-4 mt-1">
                     <button className="flex items-center gap-1 text-gray-600 hover:text-blue-600">
                       <ThumbsUp className="w-4 h-4" />
                       <span className="text-xs">{msg.likes || 0}</span>
@@ -60,29 +61,28 @@ const LiveChat: React.FC<LiveChatProps> = ({
                     <button className="flex items-center text-gray-600 hover:text-blue-600">
                       <ThumbsDown className="w-4 h-4" />
                     </button>
-                    <button className="text-gray-600 hover:text-blue-600 text-sm">
-                      Reply
-                    </button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </ScrollArea>
-        
-        {/* Chat input - at the bottom with fixed position */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gray-50 border-t border-gray-200">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-lg">
+      </div>
+      
+      {/* Chat input - fixed at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200">
+        <div className="flex items-center gap-3">
+          <Avatar className="w-10 h-10 flex-shrink-0">
+            <AvatarFallback className="bg-blue-600 text-white">
               A
-            </div>
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Message in chat..."
-                className="w-full bg-white border-b border-gray-300 pb-1 focus:outline-none focus:border-blue-500 placeholder:text-gray-500 text-gray-900"
-              />
-            </div>
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Message in chat..."
+              className="w-full border-b border-gray-300 pb-1 focus:outline-none focus:border-blue-500 placeholder:text-gray-500 text-gray-900"
+            />
           </div>
         </div>
       </div>
