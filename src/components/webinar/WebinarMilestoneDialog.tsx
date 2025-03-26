@@ -3,12 +3,42 @@ import React from 'react';
 import { CheckCircle, ArrowUpRight } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { MILESTONES } from './constants';
+
+// Define MILESTONES locally instead of importing from constants.ts
+const MILESTONES = [
+  {
+    id: "early-bird",
+    title: "Early Action Bonus",
+    description: "Special bonus for early action takers",
+    time: 2400,
+    discount: 15
+  },
+  {
+    id: "bonus-module",
+    title: "Bonus AI Module",
+    description: "Advanced AI script generation tools included",
+    time: 3600,
+    discount: 0
+  },
+  {
+    id: "special-offer",
+    title: "Limited Time Offer",
+    description: "Act now before this special pricing expires",
+    time: 4800,
+    discount: 20
+  }
+];
 
 interface WebinarMilestoneDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  currentMilestone: typeof MILESTONES[0];
+  currentMilestone: {
+    id: string;
+    title: string;
+    description: string;
+    time: number;
+    discount: number;
+  };
   countdown: number;
   onClose: () => void;
 }
