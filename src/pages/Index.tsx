@@ -11,20 +11,6 @@ import { PaymentOption } from '../components/CTAButton';
 // Define milestones directly in this component
 const MILESTONES_DATA = [
   {
-    id: "early-bird",
-    title: "Early Bird Access",
-    description: "Get access to exclusive early bird bonuses",
-    time: 1020,
-    discount: 20
-  },
-  {
-    id: "bonus-module",
-    title: "Bonus Module",
-    description: "Unlock premium AI Script Generator",
-    time: 1800,
-    discount: 15
-  },
-  {
     id: "final-offer",
     title: "Final Offer",
     description: "Last chance to join at this price",
@@ -157,7 +143,7 @@ const Index = () => {
             notification={notification}
             onLike={handleLike}
           />
-          {currentTime >= 2040 && (
+          {currentTime >= 2400 && (
             <WebinarOffer 
               seatsRemaining={seatsRemaining}
               countdownActive={countdownActive}
