@@ -11,6 +11,20 @@ import { PaymentOption } from '../components/CTAButton';
 // Define milestones directly in this component
 const MILESTONES_DATA = [
   {
+    id: "early-bird",
+    title: "Early Bird Access",
+    description: "Get access to exclusive early bird bonuses",
+    time: 1020,
+    discount: 20
+  },
+  {
+    id: "bonus-module",
+    title: "Bonus Module",
+    description: "Unlock premium AI Script Generator",
+    time: 1800,
+    discount: 15
+  },
+  {
     id: "final-offer",
     title: "Final Offer",
     description: "Last chance to join at this price",
@@ -129,11 +143,17 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-16">
-      <div className="max-w-[1600px] mx-auto p-4 px-6 sm:px-8 md:px-12 pt-8 md:pt-12">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-black text-white pb-16">
+      {/* Cinema-style header area */}
+      <div className="max-w-[1920px] mx-auto pt-6 md:pt-8 px-4 md:px-6 lg:px-8">
         <WebinarHeader />
         <WebinarTags />
-        <div className="space-y-6">
+      </div>
+      
+      {/* Main content with full-width video */}
+      <div className="w-full mt-4 space-y-8">
+        {/* Video takes up more screen real estate */}
+        <div className="max-w-[1920px] mx-auto px-4 md:px-6 lg:px-8">
           <WebinarVideo 
             currentTime={currentTime}
             viewerCount={viewerCount}
@@ -143,18 +163,25 @@ const Index = () => {
             notification={notification}
             onLike={handleLike}
           />
-          {currentTime >= 2400 && (
-            <WebinarOffer 
-              seatsRemaining={seatsRemaining}
-              countdownActive={countdownActive}
-              countdown={countdown}
-              onCTAClick={handleCTAClick}
-              oneTimePaymentUrl={oneTimePaymentUrl}
-              splitPaymentUrl={splitPaymentUrl}
-            />
-          )}
         </div>
+        
+        {/* CTA section with styled background */}
+        {currentTime >= 2040 && (
+          <div className="w-full bg-gradient-to-b from-slate-900/50 to-slate-900/90 backdrop-blur-sm py-8">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-6 lg:px-8">
+              <WebinarOffer 
+                seatsRemaining={seatsRemaining}
+                countdownActive={countdownActive}
+                countdown={countdown}
+                onCTAClick={handleCTAClick}
+                oneTimePaymentUrl={oneTimePaymentUrl}
+                splitPaymentUrl={splitPaymentUrl}
+              />
+            </div>
+          </div>
+        )}
       </div>
+      
       <WebinarMilestoneDialog 
         open={showMilestoneOffer && currentTime >= 2040}
         onOpenChange={setShowMilestoneOffer}
@@ -165,5 +192,7 @@ const Index = () => {
     </div>
   );
 };
+
+export default Index;
 
 export default Index;
