@@ -64,6 +64,20 @@ const Index = () => {
     };
   }, [countdownActive, countdown]);
 
+  // Simulate viewer count increasing during webinar
+  useEffect(() => {
+    const increaseViewers = () => {
+      if (currentTime > 300 && currentTime < 4800) { // Only increase during main part of webinar
+        if (Math.random() > 0.7) {
+          setViewerCount(prev => prev + Math.floor(Math.random() * 3) + 1);
+        }
+      }
+    };
+
+    const intervalId = setInterval(increaseViewers, 15000);
+    return () => clearInterval(intervalId);
+  }, [currentTime]);
+
   const handleTimeUpdate = (time: number) => {
     setCurrentTime(time);
   };
@@ -106,7 +120,7 @@ const Index = () => {
             notification={notification}
             onLike={handleLike}
           />
-          {currentTime >= 1020 && (
+          {currentTime >= 2040 && (
             <WebinarOffer 
               seatsRemaining={seatsRemaining}
               countdownActive={countdownActive}
@@ -119,7 +133,7 @@ const Index = () => {
         </div>
       </div>
       <WebinarMilestoneDialog 
-        open={showMilestoneOffer && currentTime >= 1020}
+        open={showMilestoneOffer && currentTime >= 2040}
         onOpenChange={setShowMilestoneOffer}
         currentMilestone={currentMilestone}
         countdown={countdown}
