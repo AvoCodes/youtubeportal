@@ -3,7 +3,6 @@ import React from 'react';
 import { CheckCircle, ArrowUpRight } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { MILESTONES } from './constants';
 
 interface WebinarMilestoneDialogProps {
   open: boolean;
@@ -33,8 +32,8 @@ const WebinarMilestoneDialog: React.FC<WebinarMilestoneDialogProps> = ({
   };
 
   // Determine milestone type based on ID to display appropriate content
-  const isFinalOffer = currentMilestone.id === MILESTONES[MILESTONES.length - 1].id;
-  const isEarlyBird = currentMilestone.id === MILESTONES[0].id;
+  const isFinalOffer = currentMilestone?.id === "final-offer";
+  const isEarlyBird = currentMilestone?.id === "early-bird";
   const isBonusModule = !isEarlyBird && !isFinalOffer;
 
   return (
