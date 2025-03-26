@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import WebinarTags from '../components/webinar/WebinarTags';
 import WebinarHeader from '../components/webinar/WebinarHeader';
@@ -6,7 +7,7 @@ import WebinarOffer from '../components/webinar/WebinarOffer';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
 import { PaymentOption } from '../components/CTAButton';
-import { NEW_ATTENDEES, MILESTONES } from '../components/webinar/constants';
+import { CHAT_MESSAGES, MILESTONES } from '../components/webinar/constants';
 
 const Index = () => {
   const [currentTime, setCurrentTime] = useState(0);
@@ -27,7 +28,7 @@ const Index = () => {
 
   useEffect(() => {
     const handleTimeBasedEvents = () => {
-      NEW_ATTENDEES.forEach(attendee => {
+      CHAT_MESSAGES.forEach(attendee => {
         if (Math.abs(currentTime - attendee.time) < 5) {
           if (Math.random() > 0.3) {
             setSeatsRemaining(prev => Math.max(prev - 1, 5));
