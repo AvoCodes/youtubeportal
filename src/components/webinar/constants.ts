@@ -15321,7 +15321,7 @@ export const CHAT_MESSAGES = [
     Second: "19",
     Name: "Holósi ",
     Role: "Attendee",
-    Message: "Let’s go bro ❤️\u200d🔥❤️\u200d🔥❤️\u200d🔥,
+    Message: "Lets go bro",
     Mode: "Text"
   },
   {
@@ -15699,7 +15699,7 @@ export const CHAT_MESSAGES = [
     Second: "38",
     Name: "Mike ",
     Role: "Attendee",
-    Message: "which niche do you recommend\\,
+    Message: "which niche do you recommend",
     Mode: "Text"
   },
   {
@@ -17704,9 +17704,9 @@ export const CHAT_MESSAGES = [
     Hour: "0",
     Minute: "26",
     Second: "14",
-    Name: "krishaandesai ",
+    Name: "krishaandesai",
     Role: "Attendee",
-    Message: "\\],
+    Message: "gaming",
     Mode: "Text"
   },
   {
@@ -40785,9 +40785,6 @@ export const CHAT_MESSAGES = [
     Message: "PEACE DAN!!!",
     Mode: "Text"
   },
-  {
-    Hour: ""
-  }
 ];
 
 // Milestone offers that appear at strategic points in the webinar
