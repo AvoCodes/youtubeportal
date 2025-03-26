@@ -7,7 +7,6 @@ import WebinarOffer from '../components/webinar/WebinarOffer';
 import WebinarMilestoneDialog from '../components/webinar/WebinarMilestoneDialog';
 import { useToast } from '@/hooks/use-toast';
 import { PaymentOption } from '../components/CTAButton';
-import { NEW_ATTENDEES } from '../components/webinar/constants';
 
 // Define milestones directly in this component
 const MILESTONES_DATA = [
@@ -32,6 +31,19 @@ const MILESTONES_DATA = [
     time: 3000,
     discount: 10
   }
+];
+
+// Define new attendees locally
+const NEW_ATTENDEES = [
+  { time: 360, name: "Ethan" },
+  { time: 720, name: "Isabella" },
+  { time: 1080, name: "Noah" },
+  { time: 1440, name: "Amelia" },
+  { time: 1800, name: "Jackson" },
+  { time: 2160, name: "Sophia" },
+  { time: 2520, name: "Lucas" },
+  { time: 2880, name: "Olivia" },
+  { time: 3240, name: "Liam" }
 ];
 
 const Index = () => {
